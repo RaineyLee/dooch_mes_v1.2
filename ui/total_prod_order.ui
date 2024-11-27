@@ -34,7 +34,7 @@
      <x>20</x>
      <y>10</y>
      <width>1221</width>
-     <height>51</height>
+     <height>73</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="lay_items">
@@ -120,11 +120,17 @@
      </widget>
     </item>
     <item>
-     <widget class="QTextEdit" name="txt_item_id">
+     <widget class="QLineEdit" name="txt_itme_id">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>100</width>
-        <height>30</height>
+        <height>16777215</height>
        </size>
       </property>
      </widget>
@@ -150,11 +156,17 @@
      </widget>
     </item>
     <item>
-     <widget class="QTextEdit" name="txt_item_name">
+     <widget class="QLineEdit" name="txt_itme_name">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>100</width>
-        <height>30</height>
+        <height>16777215</height>
        </size>
       </property>
      </widget>

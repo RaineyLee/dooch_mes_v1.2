@@ -29,9 +29,9 @@ class MainWindow(QWidget, total_overtime) :
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("생산오더 조회")
-    #     self.slots()
-    #     self.date_select_1.setDate(QDate.currentDate())
-    #     self.date_select_2.setDate(QDate.currentDate())
+        # self.slots()
+        self.date_select_from.setDate(QDate.currentDate())
+        self.date_select_to.setDate(QDate.currentDate())
     #     self.setFixedSize(QSize(1286,817))
 
     #     self.txt_dept_id.setAlignment(Qt.AlignRight)

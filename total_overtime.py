@@ -4,7 +4,7 @@ import sys
 # import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate, QSize
+from PyQt5.QtCore import Qt
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -20,7 +20,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 #UI파일 연결
-total_overtime= uic.loadUiType(resource_path("./ui/total_prod_order.ui"))[0] # Window 사용시 ui 주소
+total_overtime= uic.loadUiType(resource_path("./ui/total_overtime.ui"))[0] # Window 사용시 ui 주소
 # main_window= uic.loadUiType(resource_path("/Users/black/projects/make_erp/main_window.ui"))[0] # Mac 사용시 ui 주소
 
 #화면을 띄우는데 사용되는 Class 선언
