@@ -689,18 +689,20 @@ class Select:
             # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
 
             query = """
-                    SELECT 
+                    SELECT p_order_id AS "생산지시번호", item_id AS "품목코드", item_name AS "품목명", STATUS AS "상태", s_order_id AS "판매지시번호"
                     FROM production_info
                     WHERE p_order_id LIKE %s AND item_id LIKE %s AND item_name LIKE %s AND STATUS LIKE %s AND s_order_id LIKE %s;
                     """ 
                     # 월로 비교 하기 AND DATE_FORMAT(a.overtime_date, "%%Y-%%m") BETWEEN %s AND %s
                                 #날짜를 비교 하기 위해 안쪽 select문 사용, qt 테이블 입력을 위해 날짜 형식을 문자로 바꾸려고 밖의 select문 사용
             cursor.execute(query, arr_1) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
-            result = cursor.fetchone()
+            result = cursor.fetchall()
+
+            column_names = [description[0] for description in cursor.description] # 컬럼명 조회후 리스트로 만듬
 
             if result:
                 self.conn.close()
-                return result
+                return result, column_names
             else:
                 self.conn.close()
                 self.msg_box("조회결과", "조회결과가 없습니다.")
