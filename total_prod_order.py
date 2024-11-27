@@ -29,16 +29,16 @@ class MainWindow(QWidget, total_overtime) :
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("생산오더 조회")
-        # self.slots()
-        self.date_select_from.setDate(QDate.currentDate())
-        self.date_select_to.setDate(QDate.currentDate())
-    #     self.setFixedSize(QSize(1286,817))
+
+        self.slots()
+        self.set_date()
+
 
     #     self.txt_dept_id.setAlignment(Qt.AlignRight)
     #     self.txt_dept_id.setAlignment(Qt.AlignCenter)
         
-    # def slots(self):
-    #     self.btn_search.clicked.connect(self.make_data)
+    def slots(self):
+        self.btn_search.clicked.connect(self.make_data)
     #     self.btn_search_dept.clicked.connect(self.popup_dept_info)
     #     self.btn_clear.clicked.connect(self.clear)
     #     self.btn_close.clicked.connect(self.close)
@@ -46,9 +46,9 @@ class MainWindow(QWidget, total_overtime) :
     #     # self.btn_close.clicked.connect(self.window_close)
         # self.btn_select_emp.clicked.connect(self.popup_emp_info)
 
-    # def set_date(self):
-    #     date = self.date_select.date()
-    #     self.txt_date.setText(date.toString("yyyy-MM"))
+    def set_date(self):
+        self.date_select_from.setDate(QDate.currentDate())
+        self.date_select_to.setDate(QDate.currentDate())
 
     def clear(self):        
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
@@ -56,35 +56,68 @@ class MainWindow(QWidget, total_overtime) :
         self.txt_dept_id.setText("")
         self.txt_dept_name.setText("")
 
+    def get_args(self):
+        #  sql문에 조건 검색을 위한 "%%" 처리
+        item_id  = self.txt_item_id.text()
+        if item_id == "":
+            item_id = "%%"
+        else:
+            item_id = item_id
+
+        item_name = self.txt_item_name.text()
+        if item_name == "":
+            item_name = "%%"
+        else:
+            item_name = item_name
+
+        p_order_id = self.txt_prod_id.text()
+        if p_order_id == "":
+            p_order_id = "%%"
+        else:
+            p_order_id = p_order_id
+
+        status = self.comb_prod_status.currentText()
+        if status == "":
+            status = "%%"
+        else:
+            status = status
+
+        s_order_id = self.txt_sales_id.text()
+        if s_order_id == "":
+            s_order_id = "%%"
+        else:
+            s_order_id = s_order_id
+
+        from_date = self.date_select_from.date().toString("yyyy-MM-dd")
+        to_date = self.date_select_to.date().toString("yyyy-MM-dd")
+
+        return item_id, item_name, p_order_id, status, s_order_id, from_date, to_date
+
     def make_data(self):
-        dept_id = self.txt_dept_id.toPlainText()
-        date_1 = self.date_select_1.date().toString("yyyy-MM-dd")
-        date_2 = self.date_select_2.date().toString("yyyy-MM-dd")
-
-        if  dept_id:
-            arr_1 = [dept_id, date_1, date_2]
+        item_id, item_name, p_order_id, status, s_order_id, from_date, to_date = self.get_args()
+        arr_1 = [item_id, item_name, p_order_id, status, s_order_id, from_date, to_date]
            
-            from db.db_select import Select
-            select = Select()
+        from db.db_select import Select
+        select = Select()
 
-            result = select.all_overtime_1(arr_1)
-            if result is None:
-                return            
-            else:
-                title = ["부서아이디", "부서명", "사번", "이름", "날짜", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
-                self.make_table(len(result), result, title)
-        elif dept_id == "":
-            arr_1 = [date_1, date_2]
+        #     result = select.all_overtime_1(arr_1)
+        #     if result is None:
+        #         return            
+        #     else:
+        #         title = ["부서아이디", "부서명", "사번", "이름", "날짜", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
+        #         self.make_table(len(result), result, title)
+        # elif dept_id == "":
+        #     arr_1 = [date_1, date_2]
            
-            from db.db_select import Select
-            select = Select()
+        #     from db.db_select import Select
+        #     select = Select()
 
-            result = select.all_overtime_2(arr_1)
-            if result is None:
-                return
-            else:
-                title = ["부서아이디", "부서명", "사번", "이름", "날짜", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
-                self.make_table(len(result), result, title)
+        #     result = select.all_overtime_2(arr_1)
+        #     if result is None:
+        #         return
+        #     else:
+        #         title = ["부서아이디", "부서명", "사번", "이름", "날짜", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
+        #         self.make_table(len(result), result, title)
 
     def make_table(self, num, arr_1, title):   
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
