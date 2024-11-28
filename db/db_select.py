@@ -689,9 +689,22 @@ class Select:
             # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
 
             query = """
-                    SELECT p_order_id AS "생산지시번호", item_id AS "품목코드", item_name AS "품목명", STATUS AS "상태", s_order_id AS "판매지시번호"
-                    FROM production_info
-                    WHERE p_order_id LIKE %s AND item_id LIKE %s AND item_name LIKE %s AND STATUS LIKE %s AND s_order_id LIKE %s;
+                    SELECT 
+                        p_order_id AS "생산오더", 
+                        item_id AS "품목코드", 
+                        item_name AS "품목명", 
+                        STATUS AS "상태", 
+                        s_order_id AS "판매오더", 
+                        s_date AS "생산지시일"
+                    FROM 
+                        production_info
+                    WHERE
+                        s_date BETWEEN %s AND %s AND
+                        p_order_id LIKE %s AND 
+                        item_id LIKE %s AND 
+                        item_name LIKE %s AND 
+                        STATUS LIKE %s AND 
+                        s_order_id LIKE %s;
                     """ 
                     # 월로 비교 하기 AND DATE_FORMAT(a.overtime_date, "%%Y-%%m") BETWEEN %s AND %s
                                 #날짜를 비교 하기 위해 안쪽 select문 사용, qt 테이블 입력을 위해 날짜 형식을 문자로 바꾸려고 밖의 select문 사용

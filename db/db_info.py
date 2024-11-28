@@ -14,10 +14,16 @@ class Connect:
     # username = "scott"
     # password = "!Jhlee0809" 
            
-        
-    # wms-server
+    # # wms-server
+    # host = "192.168.1.197"
+    # port = 3306
+    # database = "webserver"
+    # username = "scott"
+    # password = "!Jhlee0809"    
+
+    # mes-server
     host = "192.168.1.197"
     port = 3306
-    database = "webserver"
+    database = "dooch_mes"
     username = "scott"
-    password = "!Jhlee0809"    
+    password = "!Jhlee0809" 
