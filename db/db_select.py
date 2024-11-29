@@ -693,9 +693,15 @@ class Select:
                         p_order_id AS "생산오더", 
                         item_id AS "품목코드", 
                         item_name AS "품목명", 
+                        s_date AS "생산지시일",
                         STATUS AS "상태", 
-                        s_order_id AS "판매오더", 
-                        s_date AS "생산지시일"
+                        c_time AS "시작 TIME",
+                        e_time AS "중지/종료 TIME",
+                        w_time AS "작업시간",
+                        p_time AS "중지시간",
+                        emp_id AS "사번",
+                        emp_name AS "사원명",
+                        s_order_id AS "판매오더"
                     FROM 
                         production_info
                     WHERE

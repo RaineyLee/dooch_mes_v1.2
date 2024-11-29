@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1193</width>
-    <height>735</height>
+    <height>778</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -319,6 +319,40 @@
       </property>
       <property name="text">
        <string>조회</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>730</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="layout_download" stretch="0">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
+    <item>
+     <widget class="QPushButton" name="btn_download">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>다운로드</string>
       </property>
      </widget>
     </item>
