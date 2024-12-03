@@ -93,8 +93,10 @@ class Insert:
         cursor = self.conn.cursor()
 
         try:
-            query = """INSERT INTO production_upload (order_id, item_id, item_name, item_qty, status, sales_order, date) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s);"""
+            query = """
+                    INSERT INTO production_upload (p_order_id, item_id, item_name, item_qty, status, s_order_id, s_date) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s);
+                    """
             cursor.executemany(query, arr)
             self.conn.commit()
             self.conn.close()
