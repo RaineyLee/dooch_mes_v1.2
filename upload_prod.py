@@ -87,8 +87,8 @@ class MainWindow(QWidget, main_window) :
         else:
             self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
 
-            from utils.make_data import Overtime
-            make_data = Overtime(file_name)
+            from utils.make_data import Prodinfo
+            make_data = Prodinfo(file_name)
 
             _list = make_data.excel_data()
 

@@ -170,3 +170,28 @@ class Prodlist():
                     column_list.append(cell.value) 
 
         return column_list
+    
+class Prodinfo():
+    def __init__(self, arg_1) :
+        self.file_name = arg_1
+
+    def excel_data(self):
+        wb = openpyxl.load_workbook(filename = self.file_name)
+        ws = wb.active
+
+        for rows in ws.iter_rows(min_row=1, max_row=1, values_only=True):
+            title = []
+            for row in rows:
+                title.append(row)
+
+        all_values = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if row[0] != '':
+                row_value = []
+                for cell in row:
+                    row_value.append(str(cell))
+                all_values.append(row_value)
+            else:
+                break
+                
+        return all_values, title

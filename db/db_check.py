@@ -66,9 +66,9 @@ class Check:
             # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
 
             query = """
-                    SELECT p_order_id
-                    FROM production_info
-                    WHERE s_date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
+                    SELECT order_id
+                    FROM production_order
+                    WHERE date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
                     """ 
             # 3개월 이내의 생산지시번호를 조회한다.
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
@@ -78,7 +78,6 @@ class Check:
             # 넘겨 받는 생산오더 정보와 현재 DB에 등록된 생산오더 정보를 비교하여 중복된 오더가 있는지 확인하는 로직
             idx = []
             num = 0
-            print(arr_1)
             for i in arr_1:
                 if i in result:
                     idx.append(arr_1.index(i))
