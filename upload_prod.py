@@ -5,7 +5,6 @@ import sys
 
 from openpyxl import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QSize
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 
@@ -87,7 +86,6 @@ class MainWindow(QWidget, main_window) :
             return
         else:
             self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
-            file_name = self.txt_select_file.text()
 
             from utils.make_data import Overtime
             make_data = Overtime(file_name)
@@ -176,28 +174,28 @@ class MainWindow(QWidget, main_window) :
                 list_1.append(data.text())
             list.append(list_1)
         
-        # 업로드 할 잔업시간 값이 float 형식이 아니면 중지
-        for i in list:
-            try:
-                float(i[7])
-            except:
-                self.msg_box("입력오류", "잔업시간 값이 숫자가 아닙니다.")
-                return
+        # # 업로드 할 잔업시간 값이 float 형식이 아니면 중지
+        # for i in list:
+        #     try:
+        #         float(i[7])
+        #     except:
+        #         self.msg_box("입력오류", "잔업시간 값이 숫자가 아닙니다.")
+        #         return
         
         arr_1 = []
         for i in list:
-            arr_11 = (i[0], i[1], i[2], i[3])
+            arr_11 = (i[0])
             arr_1.append(str(arr_11))   
         arr_1 = tuple((arr_1))
 
         from db.db_check import Check
         check_info = Check()
-        _check = check_info.check_dept_emp_info(arr_1)
+        _check = check_info.check_prod_id(arr_1)
 
         if _check:
             from db.db_insert import Insert
             data_insert = Insert()
-            result = data_insert.insert_overtime(list)
+            result = data_insert.insert_prod_info(list)
 
             self.msg_box(result[0], result[1])
             self.txt_select_file.setText("")

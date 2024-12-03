@@ -53,6 +53,51 @@ class Check:
 
         except Exception as e:
             self.msg_box("Error", str(e))
+
+    def check_prod_id(self, arr_1):
+        cursor = self.conn.cursor()
+
+        try:
+            # pymysql을 통해 쿼리 입력할 때, 아래와 같은 오류 문구를 만나곤 한다.
+            # ValueError: unsupported format character 'Y' (0x59) at index
+            # 이는 쿼리의 변수 표현에 쓰이는 %s와 data format 변경하는 (예시에서는 DATE_FORMAT) 에서의 %를 구분해주지 않았기 때문이다.
+            # SELECT DATE_FORMAT(DeviceReportedTime, '%Y-%m-%d %H:%i:%s') AS date, Facility, Priority, FromHost, FromIP, Message FROM SystemEvents WHERE DeviceReportedTime BETWEEN '%s 00:00:00' AND '%s 23:59:59' ORDER BY DeviceReportedTime DESC
+            # 위와 같이 작성하면 오류가 발생하는 것이다.            
+            # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
+
+            query = """
+                    SELECT p_order_id
+                    FROM production_info
+                    WHERE s_date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
+                    """ 
+            # 3개월 이내의 생산지시번호를 조회한다.
+            cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
+            result = cursor.fetchall()
+            result = str(result) # 비교시 문자/숫자 형식도 맞추어야 한다.
+
+            # 넘겨 받는 생산오더 정보와 현재 DB에 등록된 생산오더 정보를 비교하여 중복된 오더가 있는지 확인하는 로직
+            idx = []
+            num = 0
+            print(arr_1)
+            for i in arr_1:
+                if i in result:
+                    idx.append(arr_1.index(i))
+                    num += 1
+                else:
+                    num += 0
+
+            if num == 0:
+                return True
+            else:
+                prod_id = ""
+                for i in idx:
+                    prod_id = prod_id + " " + str(arr_1[i])
+                self.msg_box("오류", f"{prod_id}는 이미 입력된 생산오더 입니다.")
+                return
+
+        except Exception as e:
+            self.msg_box("Error", str(e))
+    
     
     def msg_box(self, msg_1, msg_2):
         msg = QMessageBox()

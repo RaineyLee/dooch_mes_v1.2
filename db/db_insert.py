@@ -89,6 +89,22 @@ class Insert:
 
         return ("완료", "잔업 정보가 업로드 되었습니다.")
     
+    def insert_prod_info(self, arr):
+        cursor = self.conn.cursor()
+
+        try:
+            query = """INSERT INTO production_order (order_id, item_id, item_name, item_qty, status, sales_order, date) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s);"""
+            cursor.executemany(query, arr)
+            self.conn.commit()
+            self.conn.close()
+
+        except Exception as e:
+            error = ("Error", str(e))
+            return error
+
+        return ("완료", "생산오더 정보가 업로드 되었습니다.")
+    
     def update_emp_info(self, arr):
         cursor = self.conn.cursor()
 
