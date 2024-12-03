@@ -66,9 +66,9 @@ class Check:
             # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
 
             query = """
-                    SELECT order_id
+                    SELECT p_order_id
                     FROM production_order
-                    WHERE date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
+                    WHERE s_date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
                     """ 
             # 3개월 이내의 생산지시번호를 조회한다.
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
