@@ -121,10 +121,17 @@ class MainWindow(QWidget, total_overtime) :
         else:
             s_order_id = s_order_id
 
+        dept_id = self.txt_dept_id.text()
+        if dept_id == "":
+            dept_id = '%%'
+        else:
+            dept_id = dept_id
+
         from_date = self.date_select_from.date().toString("yyyy-MM-dd")
         to_date = self.date_select_to.date().toString("yyyy-MM-dd")
 
-        arr_1 = [from_date, to_date, p_order_id, item_id, item_name, status, s_order_id]
+        arr_1 = [from_date, to_date, dept_id, p_order_id, item_id, item_name, status, s_order_id]
+        print(arr_1)
         self.make_data(arr_1)
 
     def make_data(self, arr_1):
@@ -136,7 +143,6 @@ class MainWindow(QWidget, total_overtime) :
             result, column_names = select.select_prod_info(arr_1)
             self.make_table(len(result), result, column_names)
         except Exception as e:
-                print(e)
                 self.msg_box("Program Error", str(e))
 
     def make_table(self, num, arr_1, column_names):   
@@ -157,6 +163,12 @@ class MainWindow(QWidget, total_overtime) :
                     cell_value = ""
 
                 item = QTableWidgetItem(str(cell_value))
+                try:
+                    value = float(str(cell_value))
+                    if value < 0:
+                        item.setBackground(Qt.red)
+                except ValueError:
+                    pass
                 self.tbl_info.setItem(i, j, item)
 
                 # 7번째 컬럼(인덱스 6)의 숫자를 시간 형식으로 변환
@@ -317,7 +329,6 @@ class MainWindow(QWidget, total_overtime) :
     #         return
         
     def get_dept_id(self):
-        print(self.dept_id)
         return self.dept_id
     
       # 테이블에 남겨진 정보를 엑셀로 변환

@@ -694,12 +694,19 @@ class Select:
                         item_id AS "품목코드", 
                         item_name AS "품목명", 
                         s_date AS "생산지시일",
+                        order_min AS "계획시간(분)",
+                        CASE 
+                            WHEN STATUS IN ('시작됨', '중지됨') THEN 
+                                ROUND((order_min - TIMESTAMPDIFF(MINUTE, c_time, NOW())), 1)
+                            ELSE 
+                                NULL
+                        END AS "잔여시간(분)",
                         STATUS AS "상태", 
                         c_time AS "시작 TIME",
                         e_time AS "종료 TIME",
-                        w_time AS "작업시간",
-                        p_time AS "중지시간",
-                        dept_name AS "부서명",
+                        ROUND((w_time / 60), 1) AS "작업시간(분)",
+                        ROUND((p_time / 60), 1) AS "중지시간(분)",
+                        dept_id AS "제조파트",
                         emp_id AS "사번",
                         emp_name AS "사원명",
                         s_order_id AS "판매오더"
@@ -707,6 +714,7 @@ class Select:
                         production_info
                     WHERE
                         s_date BETWEEN %s AND %s AND
+                        dept_id LIKE %s AND
                         p_order_id LIKE %s AND 
                         item_id LIKE %s AND 
                         item_name LIKE %s AND 
