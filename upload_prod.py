@@ -63,7 +63,7 @@ class MainWindow(QWidget, main_window) :
     def slots(self):
         self.btn_open.clicked.connect(self.file_open)
         self.btn_select.clicked.connect(self.make_data)
-        self.btn_upload.clicked.connect(self.upload)
+        self.btn_upload.clicked.connect(self.check_data)
         self.btn_close.clicked.connect(self.window_close)
         self.btn_delete.clicked.connect(self.delete_rows)
         # self.btn_select_dept.clicked.connect(self.popup_dept_info)
@@ -127,8 +127,22 @@ class MainWindow(QWidget, main_window) :
         table = self.tbl_info
         header = table.horizontalHeader()
 
-        for i in range(col):
-            header.setSectionResizeMode(i, QHeaderView.Interactive)
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
+
+        # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
+        for i in range(table.columnCount()):
+            if i in [2, 5, 6]:  # 특정 컬럼은 길이에 맞추어 조정
+                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+                
+            else:  # 나머지 컬럼은 Interactive
+                header.setSectionResizeMode(i, QHeaderView.Interactive)
         ################################################################
 
         # 정렬 기능 활성화
@@ -161,7 +175,7 @@ class MainWindow(QWidget, main_window) :
         for rowid in rows:
             self.tbl_info.removeRow(rowid)
 
-    def upload(self):
+    def check_data(self):
         # 현재 테이블 데이터(수정, 삭제 될 수 있다.)
         rows = self.tbl_info.rowCount()
         cols = self.tbl_info.columnCount()
@@ -173,7 +187,25 @@ class MainWindow(QWidget, main_window) :
                 data = self.tbl_info.item(i,j)
                 list_1.append(data.text())
             list.append(list_1)
-        
+
+        arr_1 = []
+        for i in list:
+            arr_11 = (i[0])
+            arr_1.append(str(arr_11))   
+        arr_1 = tuple((arr_1))
+
+        try:
+            from db.db_check import Check
+            check_info = Check()
+            _check = check_info.check_prod_id(arr_1)
+
+            if _check:
+                self.upload(list)
+        except Exception as e:
+            self.msg_box("Error", str(e))
+            return   
+
+    def upload(self, list): 
         # # 업로드 할 잔업시간 값이 float 형식이 아니면 중지
         # for i in list:
         #     try:
@@ -182,27 +214,17 @@ class MainWindow(QWidget, main_window) :
         #         self.msg_box("입력오류", "잔업시간 값이 숫자가 아닙니다.")
         #         return
         
-        arr_1 = []
-        for i in list:
-            arr_11 = (i[0])
-            arr_1.append(str(arr_11))   
-        arr_1 = tuple((arr_1))
 
-        from db.db_check import Check
-        check_info = Check()
-        _check = check_info.check_prod_id(arr_1)
+        from db.db_insert import Insert
+        data_insert = Insert()
+        result = data_insert.insert_prod_info(list)
 
-        if _check:
-            from db.db_insert import Insert
-            data_insert = Insert()
-            result = data_insert.insert_prod_info(list)
-
-            self.msg_box(result[0], result[1])
-            self.txt_select_file.setText("")
-            #테이블을 지울경우 clear 같은 종류의 실행문을 쓰면 row 또는 column 헤더가 남는 경우가 생긴다.
-            #column과 row 갯수를 "0"로 만들면 이런 현상이 생기지 않는다.
-            self.tbl_info.setColumnCount(0)
-            self.tbl_info.setRowCount(0)
+        self.msg_box(result[0], result[1])
+        self.txt_select_file.setText("")
+        #테이블을 지울경우 clear 같은 종류의 실행문을 쓰면 row 또는 column 헤더가 남는 경우가 생긴다.
+        #column과 row 갯수를 "0"로 만들면 이런 현상이 생기지 않는다.
+        self.tbl_info.setColumnCount(0)
+        self.tbl_info.setRowCount(0)
 
         # # 부서명 가져오기 팝업
         # def popup_dept_info(self):

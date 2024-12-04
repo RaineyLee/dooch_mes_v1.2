@@ -696,9 +696,10 @@ class Select:
                         s_date AS "생산지시일",
                         STATUS AS "상태", 
                         c_time AS "시작 TIME",
-                        e_time AS "중지/종료 TIME",
+                        e_time AS "종료 TIME",
                         w_time AS "작업시간",
                         p_time AS "중지시간",
+                        dept_name AS "부서명",
                         emp_id AS "사번",
                         emp_name AS "사원명",
                         s_order_id AS "판매오더"
@@ -728,7 +729,7 @@ class Select:
                 return            
 
         except Exception as e:
-            self.msg_box("Error", str(e))
+            self.msg_box("DB Error", str(e))
 
     def msg_box(self, msg_1, msg_2):
         msg = QMessageBox()

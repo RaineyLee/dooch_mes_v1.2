@@ -20,7 +20,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 #UI파일 연결
-total_overtime= uic.loadUiType(resource_path("./ui/total_prod_order.ui"))[0] # Window 사용시 ui 주소
+total_overtime= uic.loadUiType(resource_path("./ui/prod_order_info.ui"))[0] # Window 사용시 ui 주소
 # main_window= uic.loadUiType(resource_path("/Users/black/projects/make_erp/main_window.ui"))[0] # Mac 사용시 ui 주소
 
 #화면을 띄우는데 사용되는 Class 선언
@@ -37,18 +37,20 @@ class MainWindow(QWidget, total_overtime) :
     def layout_setting(self):
         # 버튼 레이아웃
         items_layout = QHBoxLayout()
-        items_layout.addWidget(self.label)
+        items_layout.addWidget(self.label_8)
         items_layout.addWidget(self.date_select_from)
         items_layout.addWidget(self.date_select_to)
-        items_layout.addWidget(self.label_3)
+        items_layout.addWidget(self.label_9)
+        items_layout.addWidget(self.txt_dept_id)
+        items_layout.addWidget(self.label_10)
         items_layout.addWidget(self.txt_prod_id)
-        items_layout.addWidget(self.label_4)
+        items_layout.addWidget(self.label_11)
         items_layout.addWidget(self.txt_item_id)
-        items_layout.addWidget(self.label_5)
+        items_layout.addWidget(self.label_12)
         items_layout.addWidget(self.txt_item_name)
-        items_layout.addWidget(self.label_6)
+        items_layout.addWidget(self.label_13)
         items_layout.addWidget(self.comb_prod_status)
-        items_layout.addWidget(self.label_7)
+        items_layout.addWidget(self.label_14)
         items_layout.addWidget(self.txt_sales_id)        
         items_layout.addWidget(self.btn_search)
 
@@ -135,7 +137,7 @@ class MainWindow(QWidget, total_overtime) :
             self.make_table(len(result), result, column_names)
         except Exception as e:
                 print(e)
-                self.msg_box("Error", str(e))
+                self.msg_box("Program Error", str(e))
 
     def make_table(self, num, arr_1, column_names):   
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
@@ -179,6 +181,15 @@ class MainWindow(QWidget, total_overtime) :
         # 컬럼 헤더를 인터랙티브 모드로 설정 + 데이터 길이에 맞추어 확장 가능하도록 설정
         table = self.tbl_info
         header = table.horizontalHeader()
+
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
 
         # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
         for i in range(table.columnCount()):

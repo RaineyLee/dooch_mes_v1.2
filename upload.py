@@ -91,6 +91,7 @@ class MainWindow(QWidget, main_window) :
 
         for i in range(col):
             header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+
         ################################################################
 
         # 테이블의 길이에 맞추어 컬럼 길이를 균등하게 확장

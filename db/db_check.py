@@ -67,14 +67,16 @@ class Check:
 
             query = """
                     SELECT p_order_id
-                    FROM production_order
-                    WHERE s_date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND CURRENT_DATE;
+                    FROM production_upload
+                    WHERE s_date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 3 MONTH); 
                     """ 
-            # 3개월 이내의 생산지시번호를 조회한다.
+            # 앞/뒤로 3개월 안의 생산지시번호를 조회한다.
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
             result = cursor.fetchall()
             result = str(result) # 비교시 문자/숫자 형식도 맞추어야 한다.
-
+            
+            print(result)
+            print(arr_1)
             # 넘겨 받는 생산오더 정보와 현재 DB에 등록된 생산오더 정보를 비교하여 중복된 오더가 있는지 확인하는 로직
             idx = []
             num = 0
