@@ -70,6 +70,7 @@ class MainWindow(QWidget, main_window):
         self.make_emp_table(len(result), result, column_names)
 
     def make_emp_table(self, num, arr_1, column_names):   
+        self.tbl_emp_info.setSortingEnabled(False)  # 정렬 비활성화
         self.tbl_emp_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
 
         col = len(column_names)
@@ -106,6 +107,12 @@ class MainWindow(QWidget, main_window):
         for i in range(col):
             header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
         ################################################################
+
+        # 정렬 기능 활성화
+        self.tbl_emp_info.setSortingEnabled(True)
+
+        # 마지막 컬럼도 Stretch 비율로 포함
+        header.setStretchLastSection(False)
 
         # 테이블의 길이에 맞추어 컬럼 길이를 균등하게 확장
         self.tbl_emp_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

@@ -1,15 +1,13 @@
 import sys
 from cx_Freeze import setup, Executable
 from PyQt5.QtWidgets import QApplication, QMessageBox
-import matplotlib
+import os
 
 try:
     # 개발 참조 사이트
     # https://cx-freeze.readthedocs.io/en/latest/setup_script.html#cmdoption-arg-include_files
 
     packages = [
-        "matplotlib", 
-        "numpy",
         "PyQt5.QtWidgets"
     ]
 
@@ -17,15 +15,20 @@ try:
     build_exe_options = {
         "packages": packages,
         "excludes": [],
-        "include_files": [(matplotlib.get_data_path(), "mpl-data"),("./ui", "ui"), ("./excel", "excel"),
-                          ("./utils", "utils"), ("./popup", "popup"), ("./db", "db"), (r"C:/Python312/python312.dll", "python312.dll")], # 특정 폴더 추가가 필요시 경로명(상대경로 가능)과 사용할 폴더명 명시
-        "build_exe": "C:/myproject/build"  # Specify the output directory
+        "include_files": [("./ui", "ui"), 
+                          ("./excel", "excel"),
+                          ("./utils", "utils"),
+                          ("./popup", "popup"), 
+                          ("./db", "db"), 
+                          (r"C:/Python310/python310.dll", "python310.dll")
+                          ],  # DLL 파일 추가 # 특정 폴더 추가가 필요시 경로명(상대경로 가능)과 사용할 폴더명 명시
+        "build_exe": "D:/2. myproject/Build"  # Specify the output directory
     }
 
     setup(
-        name="OVERTIME",
-        version="1.8",
-        description="DOOCH OVERTIME",
+        name="DOOCHPUMP MES_V1.0",
+        version="1.0",
+        description="DOOCHPUMP MES",
         executables=[
             Executable(
                 "main.py",

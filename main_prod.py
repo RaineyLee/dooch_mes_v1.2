@@ -156,6 +156,7 @@ class MainWindow(QWidget, main_window) :
                 self.msg_box("Program Error", str(e))
 
     def make_table(self, num, arr_1, column_names):   
+        self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
 
         col = len(column_names)
