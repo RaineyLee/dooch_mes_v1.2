@@ -1,10 +1,8 @@
 import os
 import sys
-# import warnings
-# import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate, QSize
+from PyQt5.QtCore import Qt, QDate
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -20,15 +18,15 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 #UI파일 연결
-total_overtime= uic.loadUiType(resource_path("./ui/prod_order_info.ui"))[0] # Window 사용시 ui 주소
+main_window= uic.loadUiType(resource_path("./ui/prod_stop_info.ui"))[0] # Window 사용시 ui 주소
 # main_window= uic.loadUiType(resource_path("/Users/black/projects/make_erp/main_window.ui"))[0] # Mac 사용시 ui 주소
 
 #화면을 띄우는데 사용되는 Class 선언
-class MainWindow(QWidget, total_overtime) :
+class MainWindow(QWidget, main_window) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle("생산오더 조회")
+        self.setWindowTitle("중지사유 조회")
 
         self.layout_setting()
         self.slots()
@@ -40,24 +38,19 @@ class MainWindow(QWidget, total_overtime) :
         items_layout.addWidget(self.label_8)
         items_layout.addWidget(self.date_select_from)
         items_layout.addWidget(self.date_select_to)
-        items_layout.addWidget(self.label_9)
-        items_layout.addWidget(self.txt_dept_id)
         items_layout.addWidget(self.label_10)
         items_layout.addWidget(self.txt_prod_id)
         items_layout.addWidget(self.label_11)
         items_layout.addWidget(self.txt_item_id)
         items_layout.addWidget(self.label_12)
-        items_layout.addWidget(self.txt_item_name)
-        items_layout.addWidget(self.label_13)
-        items_layout.addWidget(self.comb_prod_status)
-        items_layout.addWidget(self.label_14)
-        items_layout.addWidget(self.txt_sales_id)        
+        items_layout.addWidget(self.txt_item_name)  
         items_layout.addWidget(self.btn_search)
 
         # 실행 버튼 레이아웃
         exec_layout = QHBoxLayout()
         exec_layout.addWidget(self.btn_download)
-        exec_layout.setAlignment(Qt.AlignLeft)  # 왼쪽 정렬 추가
+        exec_layout.addWidget(self.btn_close)
+        exec_layout.setAlignment(Qt.AlignRight)  # 오른쪽 정렬 추가
 
         # 전체 레이아웃
         main_layout = QVBoxLayout()
@@ -73,11 +66,14 @@ class MainWindow(QWidget, total_overtime) :
     def slots(self):
         self.btn_search.clicked.connect(self.get_args)
         self.btn_download.clicked.connect(self.make_file)
+        self.btn_close.clicked.connect(self.window_close)
     #     self.btn_search_dept.clicked.connect(self.popup_dept_info)
     #     self.btn_clear.clicked.connect(self.clear)
     #     self.btn_close.clicked.connect(self.close)
-    #     # self.btn_close.clicked.connect(self.window_close)
         # self.btn_select_emp.clicked.connect(self.popup_emp_info)
+        self.txt_prod_id.returnPressed.connect(self.btn_search.click)
+        self.txt_item_id.returnPressed.connect(self.btn_search.click)
+        self.txt_item_name.returnPressed.connect(self.btn_search.click)
 
     def set_date(self):
         self.date_select_from.setDate(QDate.currentDate())
@@ -109,28 +105,10 @@ class MainWindow(QWidget, total_overtime) :
         else:
             p_order_id = p_order_id
 
-        status = self.comb_prod_status.currentText()
-        if status == "":
-            status = '%%'
-        else:
-            status = status
-
-        s_order_id = self.txt_sales_id.text()
-        if s_order_id == "":
-            s_order_id = '%%'
-        else:
-            s_order_id = s_order_id
-
-        dept_id = self.txt_dept_id.text()
-        if dept_id == "":
-            dept_id = '%%'
-        else:
-            dept_id = dept_id
-
         from_date = self.date_select_from.date().toString("yyyy-MM-dd")
         to_date = self.date_select_to.date().toString("yyyy-MM-dd")
 
-        arr_1 = [from_date, to_date, dept_id, p_order_id, item_id, item_name, status, s_order_id]
+        arr_1 = [from_date, to_date, p_order_id, item_id, item_name]
         print(arr_1)
         self.make_data(arr_1)
 
@@ -140,9 +118,10 @@ class MainWindow(QWidget, total_overtime) :
         select = Select()
 
         try:
-            result, column_names = select.select_prod_info(arr_1)
+            result, column_names = select.select_stop_info(arr_1)
             self.make_table(len(result), result, column_names)
         except Exception as e:
+                return
                 self.msg_box("Program Error", str(e))
 
     def make_table(self, num, arr_1, column_names):   
@@ -163,20 +142,24 @@ class MainWindow(QWidget, total_overtime) :
                     cell_value = ""
 
                 item = QTableWidgetItem(str(cell_value))
-                try:
-                    value = float(str(cell_value))
-                    if value < 0:
-                        item.setBackground(Qt.red)
-                except ValueError:
-                    pass
+                
+                # # 음수값은 빨간색으로 표시
+                # try:
+                #     value = float(str(cell_value))
+                #     if value < 0:
+                #         item.setBackground(Qt.red)
+                # except ValueError:
+                #     pass
+                
+                # 테이블에 데이터 입력
                 self.tbl_info.setItem(i, j, item)
 
-                # 7번째 컬럼(인덱스 6)의 숫자를 시간 형식으로 변환
-                if j in [7,8] and cell_value != "":  # 8번째 컬럼
-                    cell_value = self.format_seconds_to_time(cell_value)
+                # # 7번째 컬럼(인덱스 6)의 숫자를 시간 형식으로 변환
+                # if j in [7,8] and cell_value != "":  # 8번째 컬럼
+                #     cell_value = self.format_seconds_to_time(cell_value)
 
                 # 3번째 컬럼만 왼쪽 정렬
-                if j == 2:  # 컬럼 인덱스 2 (3번째 컬럼)
+                if j in [2, 4]:  # 컬럼 인덱스 2, 4 (3번째 컬럼)
                     item.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                 else:  # 나머지 컬럼은 중앙 정렬
                     item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)                
@@ -203,13 +186,13 @@ class MainWindow(QWidget, total_overtime) :
             }
         """)
 
-        # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
-        for i in range(table.columnCount()):
-            if i in [2, 5, 6]:  # 특정 컬럼은 길이에 맞추어 조정
-                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        # # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
+        # for i in range(table.columnCount()):
+        #     if i in [2, 4, 8, 9]:  # 특정 컬럼은 길이에 맞추어 조정
+        #         header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
                 
-            else:  # 나머지 컬럼은 Interactive
-                header.setSectionResizeMode(i, QHeaderView.Interactive)
+        #     else:  # 나머지 컬럼은 Interactive
+        #         header.setSectionResizeMode(i, QHeaderView.Interactive)
 
         # 정렬 기능 활성화
         self.tbl_info.setSortingEnabled(True)
@@ -262,15 +245,15 @@ class MainWindow(QWidget, total_overtime) :
         # # 마지막 컬럼도 Stretch 비율로 포함
         # header.setStretchLastSection(True)
 
-        # # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
-        # # 이 방법은 컬럼의 길이를 마우스로 조절할 수 없게 함.
-        # ################################################################
-        # table = self.tbl_info
-        # header = table.horizontalHeader()
+        # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
+        # 이 방법은 컬럼의 길이를 마우스로 조절할 수 없게 함.
+        ################################################################
+        table = self.tbl_info
+        header = table.horizontalHeader()
 
-        # for i in range(col):
-        #     header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
-        # ################################################################
+        for i in range(col):
+            header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        ################################################################
        
 
 

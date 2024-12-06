@@ -111,6 +111,14 @@ class MainWindow(QWidget, main_window) :
                 # NULL(None)을 공란으로 처리
                 if cell_value == "None":
                     cell_value = ""
+                
+                # cell_value가 소수점인지 확인하고 정수로 변환
+                if isinstance(cell_value, str) and cell_value.count('.') == 1:
+                    try:
+                        float_value = float(cell_value)
+                        cell_value = int(float_value)
+                    except ValueError:
+                        pass                
 
                 item = QTableWidgetItem(str(cell_value))
                 self.tbl_info.setItem(i, j, item)

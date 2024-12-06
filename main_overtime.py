@@ -27,17 +27,38 @@ class MainWindow(QWidget, main_window):
 
         self.setupUi(self)
         self.setWindowTitle("월별/사원별 잔업시간")
-        self.setFixedSize(QSize(1286,790))
 
         self.monthly_emp_report()
         self.monthly_sum_report()
 
         self.slots()
+        self.layout_setting()
 
     def slots(self):
         self.btn_send.clicked.connect(self.monthly_emp_report)
         self.btn_download.clicked.connect(self.make_file)
         self.btn_close.clicked.connect(self.close)
+
+    def layout_setting(self):
+        # 타이틀 레이아웃
+        title_layout = QHBoxLayout()
+        title_layout.addWidget(self.lbl_select_date)
+        title_layout.addWidget(self.btn_send)
+
+        # 실행 버튼 레이아웃
+        exec_layout = QHBoxLayout()
+        exec_layout.addWidget(self.btn_download)
+        exec_layout.addWidget(self.btn_close)
+        exec_layout.setAlignment(Qt.AlignRight)  # 오른쪽 정렬 추가
+
+        # 전체 레이아웃
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(title_layout)  # 버튼 추가
+        main_layout.addWidget(self.tbl_emp_info)  # 테이블 추가
+        main_layout.addWidget(self.tbl_emp_month_info)  # 테이블 추가
+        main_layout.addLayout(exec_layout)
+
+        self.setLayout(main_layout)
 
     def monthly_emp_report(self):
         self.tbl_emp_info.show()
@@ -59,13 +80,28 @@ class MainWindow(QWidget, main_window):
 
         for i in range(num):
             for j in range(col): # 아니면 10개
-                self.tbl_emp_info.setItem(i, j, QTableWidgetItem(str(arr_1[i][j])))
+                cell_value = arr_1[i][j]
+
+                if cell_value == 0:
+                    cell_value = ''
+
+                item = QTableWidgetItem(str(cell_value))
+                self.tbl_emp_info.setItem(i, j, item)
                 self.tbl_emp_info.item(i, j).setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)     
 
         # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
         ################################################################
         table = self.tbl_emp_info
         header = table.horizontalHeader()
+        
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
 
         for i in range(col):
             header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
@@ -88,18 +124,31 @@ class MainWindow(QWidget, main_window):
 
         self.tbl_emp_month_info.setRowCount(num)
         self.tbl_emp_month_info.setColumnCount(col)
-        # self.tbl_month_info.setHorizontalHeaderLabels(column_names) #헤더 숨기기를 위해 라벨을 설정하지 않음
+        self.tbl_emp_month_info.setHorizontalHeaderLabels(column_names)
 
         for i in range(num):
             for j in range(col): # 아니면 10개
-                self.tbl_emp_month_info.setItem(i, j, QTableWidgetItem(str(arr_1[i][j])))
+                cell_value = arr_1[i][j]
+                if cell_value == 0:
+                    cell_value = ''
+                item = QTableWidgetItem(str(cell_value))
+                self.tbl_emp_month_info.setItem(i, j, item)
                 self.tbl_emp_month_info.item(i, j).setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)     
 
         # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
         ################################################################
         table = self.tbl_emp_month_info
         header = table.horizontalHeader()
-        header.hide() # 헤더 숨기기 함수
+        # header.hide() # 헤더 숨기기 함수
+
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
 
         for i in range(col):
             header.setSectionResizeMode(i, QHeaderView.ResizeToContents)

@@ -4,7 +4,7 @@ import sys
 # import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -28,27 +28,25 @@ class MainWindow(QWidget, total_overtime) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle("생산오더 조회")
-    #     self.slots()
-    #     self.date_select_1.setDate(QDate.currentDate())
-    #     self.date_select_2.setDate(QDate.currentDate())
-    #     self.setFixedSize(QSize(1286,817))
+        self.setWindowTitle("잔업시간 조회")
+        self.slots()
+        self.date_select_1.setDate(QDate.currentDate())
+        self.date_select_2.setDate(QDate.currentDate())
+        # self.setFixedSize(QSize(1286,817))
 
-    #     self.txt_dept_id.setAlignment(Qt.AlignRight)
-    #     self.txt_dept_id.setAlignment(Qt.AlignCenter)
+        self.txt_dept_id.setAlignment(Qt.AlignRight)
+        self.txt_dept_id.setAlignment(Qt.AlignCenter)
         
-    # def slots(self):
-    #     self.btn_search.clicked.connect(self.make_data)
-    #     self.btn_search_dept.clicked.connect(self.popup_dept_info)
-    #     self.btn_clear.clicked.connect(self.clear)
-    #     self.btn_close.clicked.connect(self.close)
-    #     self.btn_download.clicked.connect(self.make_file)
-    #     # self.btn_close.clicked.connect(self.window_close)
-        # self.btn_select_emp.clicked.connect(self.popup_emp_info)
+    def slots(self):
+        self.btn_search.clicked.connect(self.make_data)
+        self.btn_search_dept.clicked.connect(self.popup_dept_info)
+        self.btn_clear.clicked.connect(self.clear)
+        self.btn_close.clicked.connect(self.close)
+        self.btn_download.clicked.connect(self.make_file)
 
-    # def set_date(self):
-    #     date = self.date_select.date()
-    #     self.txt_date.setText(date.toString("yyyy-MM"))
+    def set_date(self):
+        date = self.date_select.date()
+        self.txt_date.setText(date.toString("yyyy-MM"))
 
     def clear(self):        
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
