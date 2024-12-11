@@ -56,9 +56,13 @@ class WindowClass(QMainWindow, main_window) :
         prod_order_upload.triggered.connect(self.prod_order_upload)
 
         # 잔업관리
-        overtime_present = QAction('잔업현황', self)
-        overtime_present.setStatusTip("잔업현황")
+        overtime_present = QAction('부서별 잔업현황', self)
+        overtime_present.setStatusTip("부서별 잔업현황")
         overtime_present.triggered.connect(self.overtime_present)
+
+        overtime_emp_present = QAction('사원별 잔업현황', self)
+        overtime_emp_present.setStatusTip("사원별 잔업현황")
+        overtime_emp_present.triggered.connect(self.overtime_emp_present)
 
         # select_dept = QAction('부서별 조회', self)
         # select_dept.setStatusTip("부서별 조회")
@@ -94,6 +98,7 @@ class WindowClass(QMainWindow, main_window) :
         prod_menu.addAction(prod_order_upload)
 
         overtime_menu.addAction(overtime_present)
+        overtime_menu.addAction(overtime_emp_present)
 
         status_bar = self.statusBar()
         self.setStatusBar(status_bar)
@@ -126,6 +131,13 @@ class WindowClass(QMainWindow, main_window) :
         self.setCentralWidget(self.main_overtime_window)
         self.show()
 
+    def overtime_emp_present(self):
+        import emp_main_overtime as emp_overtime_window
+
+        self.main_overtime_window = emp_overtime_window.MainWindow()
+        self.setCentralWidget(self.main_overtime_window)
+        self.show()
+
     def select_dept(self):
         import dept_overtime as select_dept_window
 
@@ -139,7 +151,7 @@ class WindowClass(QMainWindow, main_window) :
         self.emp_window.show() 
 
     def select_month(self):
-        import main_overtime as select_emp_month_window
+        import emp_main_overtime as select_emp_month_window
 
         self.emp_month_window = select_emp_month_window.MainWindow()
         self.emp_month_window.show()     
