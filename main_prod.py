@@ -100,6 +100,8 @@ class MainWindow(QWidget, main_window) :
         self.txt_dept_name.setText("")
 
     def get_args(self):
+        # 테이블에 입력된 내용을 삭제
+        self.tbl_info.setRowCount(0)
         #  sql문에 조건 검색을 위한 "%%" 처리
         item_id  = self.txt_item_id.text()
         if item_id == "":
