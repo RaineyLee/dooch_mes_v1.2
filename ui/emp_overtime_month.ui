@@ -86,7 +86,7 @@
      <x>10</x>
      <y>70</y>
      <width>1261</width>
-     <height>521</height>
+     <height>471</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -157,9 +157,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>590</y>
+     <y>549</y>
      <width>1261</width>
-     <height>80</height>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -168,7 +168,7 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>60</height>
+        <height>100</height>
        </size>
       </property>
       <property name="verticalScrollBarPolicy">
