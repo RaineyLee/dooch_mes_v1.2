@@ -75,8 +75,6 @@ class Check:
             result = cursor.fetchall()
             result = str(result) # 비교시 문자/숫자 형식도 맞추어야 한다.
             
-            print(result)
-            print(arr_1)
             # 넘겨 받는 생산오더 정보와 현재 DB에 등록된 생산오더 정보를 비교하여 중복된 오더가 있는지 확인하는 로직
             idx = []
             num = 0

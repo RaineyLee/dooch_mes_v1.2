@@ -98,6 +98,9 @@ class MainWindow(QWidget, main_window) :
             self.make_table(len(data), data, title)
 
     def make_table(self, num, arr_1, arg_1):   
+        self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화 --> 정렬을 비활성화 하지 않으면 재/조회시 테이블이 꼬인다.
+        self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
+
         col = len(arg_1)
 
         self.tbl_info.setRowCount(num)
