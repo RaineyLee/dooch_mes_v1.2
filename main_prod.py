@@ -41,7 +41,7 @@ class MainWindow(QWidget, main_window) :
         items_layout.addWidget(self.date_select_from)
         items_layout.addWidget(self.date_select_to)
         items_layout.addWidget(self.label_9)
-        items_layout.addWidget(self.txt_dept_id)
+        items_layout.addWidget(self.txt_p_dept_id)
         items_layout.addWidget(self.label_10)
         items_layout.addWidget(self.txt_prod_id)
         items_layout.addWidget(self.label_11)
@@ -83,7 +83,7 @@ class MainWindow(QWidget, main_window) :
     #     self.btn_clear.clicked.connect(self.clear)
     #     self.btn_close.clicked.connect(self.close)
         # self.btn_select_emp.clicked.connect(self.popup_emp_info)
-        self.txt_dept_id.returnPressed.connect(self.btn_search.click)
+        self.txt_p_dept_id.returnPressed.connect(self.btn_search.click)
         self.txt_prod_id.returnPressed.connect(self.btn_search.click)
         self.txt_item_id.returnPressed.connect(self.btn_search.click)
         self.txt_item_name.returnPressed.connect(self.btn_search.click)
@@ -96,7 +96,7 @@ class MainWindow(QWidget, main_window) :
     def clear(self):        
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
 
-        self.txt_dept_id.setText("")
+        self.txt_p_dept_id.setText("")
         self.txt_dept_name.setText("")
 
     def get_args(self):
@@ -133,16 +133,16 @@ class MainWindow(QWidget, main_window) :
         else:
             s_order_id = s_order_id
 
-        dept_id = self.txt_dept_id.text()
-        if dept_id == "":
-            dept_id = '%%'
+        p_dept_id = self.txt_p_dept_id.text()
+        if p_dept_id == "":
+            p_dept_id = '%%'
         else:
-            dept_id = dept_id
+            p_dept_id = p_dept_id
 
         from_date = self.date_select_from.date().toString("yyyy-MM-dd")
         to_date = self.date_select_to.date().toString("yyyy-MM-dd")
 
-        arr_1 = [from_date, to_date, dept_id, p_order_id, item_id, item_name, status, s_order_id]
+        arr_1 = [from_date, to_date, p_dept_id, p_order_id, item_id, item_name, status, s_order_id]
         self.make_data(arr_1)
 
     def make_data(self, arr_1):
@@ -325,14 +325,14 @@ class MainWindow(QWidget, main_window) :
             value = input_dialog.get_input_value()
 
             try:
-                self.txt_dept_id.setText(value[0].text())
+                self.txt_p_dept_id.setText(value[0].text())
                 self.txt_dept_name.setText(value[1].text())
             except:
                 return
         
     ### 다이알로그 창으로 값을 전달 할 때는 아규먼트를 보내 주는 방식으로 !!!!
     # def popup_emp_info(self):
-    #     arg_1 = self.txt_dept_id.toPlainText()
+    #     arg_1 = self.txt_p_dept_id.toPlainText()
     #     input_dialog = EmpWindow(arg_1) ##   <-----중요 포인트
     #     if input_dialog.exec_():
     #         value = input_dialog.get_input_value()
@@ -343,8 +343,8 @@ class MainWindow(QWidget, main_window) :
     #     except:
     #         return
         
-    def get_dept_id(self):
-        return self.dept_id
+    def get_p_dept_id(self):
+        return self.p_dept_id
     
       # 테이블에 남겨진 정보를 엑셀로 변환
     def make_file(self):

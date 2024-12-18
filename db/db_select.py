@@ -680,6 +680,8 @@ class Select:
     def select_prod_info(self, arr_1):
         cursor = self.conn.cursor()
 
+        print(arr_1)
+
         try:
             # pymysql을 통해 쿼리 입력할 때, 아래와 같은 오류 문구를 만나곤 한다.
             # ValueError: unsupported format character 'Y' (0x59) at index
@@ -707,15 +709,15 @@ class Select:
                         e_time AS "종료 TIME",
                         ROUND((w_time / 60), 1) AS "작업시간(분)",
                         ROUND((p_time / 60), 1) AS "중지시간(분)",
-                        dept_id AS "제조파트",
-                        emp_id AS "사번",
-                        emp_name AS "사원명",
+                        p_dept_id AS "할당파트",
+                        dept_id AS "작업파트",
+                        dept_name AS "작업파트명",
                         s_order_id AS "판매오더"
                     FROM 
                         production_info
                     WHERE
                         DATE(s_date) BETWEEN %s AND %s AND
-                        dept_id LIKE %s AND
+                        p_dept_id LIKE %s AND
                         p_order_id LIKE %s AND 
                         item_id LIKE %s AND 
                         item_name LIKE %s AND 

@@ -210,11 +210,35 @@ class MainWindow(QWidget, main_window) :
             check_info = Check()
             _check = check_info.check_prod_id(arr_1)
 
-            if _check:
+            if _check == True:
                 self.upload(list)
+            else:
+                db_index = _check
+                print(db_index)
+
+                reply = QMessageBox.question(self, 'Message', '중복된 생산지시번호가 있습니다. 삭제하시겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                if reply == QMessageBox.Yes:
+                    self.delete_rows_indexs(db_index)
+
         except Exception as e:
             self.msg_box("Error", str(e))
             return   
+        
+            # 테이블 선택범위 삭제
+    def delete_rows_indexs(self, db_index):
+        indexes = db_index
+        rows = []
+
+        for value in indexes:
+            if value not in rows:
+                rows.append(value)
+
+        # 삭제시 오류 방지를 위해 아래서 부터 삭제(리버스 소팅)
+        rows = sorted(rows, reverse=True)
+
+        # 선택행 삭제
+        for rowid in rows:
+            self.tbl_info.removeRow(rowid)
 
     def upload(self, list): 
         # # 업로드 할 잔업시간 값이 float 형식이 아니면 중지
@@ -224,7 +248,7 @@ class MainWindow(QWidget, main_window) :
         #     except:
         #         self.msg_box("입력오류", "잔업시간 값이 숫자가 아닙니다.")
         #         return
-        
+        print(list)
 
         from db.db_insert import Insert
         data_insert = Insert()

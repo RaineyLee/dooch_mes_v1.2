@@ -154,7 +154,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="txt_dept_id">
+     <widget class="QLineEdit" name="txt_p_dept_id">
       <property name="minimumSize">
        <size>
         <width>0</width>

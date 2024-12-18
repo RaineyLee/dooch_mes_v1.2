@@ -85,14 +85,13 @@ class Check:
                 else:
                     num += 0
 
-            if num == 0:
+            if num == 0:    
                 return True
             else:
-                prod_id = ""
-                for i in idx:
-                    prod_id = prod_id + " " + str(arr_1[i])
-                self.msg_box("오류", f"{prod_id}는 이미 입력된 생산오더 입니다.")
-                return
+                # prod_id = ""
+                # for i in idx:
+                #     prod_id = prod_id + " " + str(arr_1[i])
+                return idx
 
         except Exception as e:
             self.msg_box("Error", str(e))

@@ -2,7 +2,7 @@ import os
 import sys
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QTimer
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -74,6 +74,12 @@ class MainWindow(QWidget, main_window) :
         self.txt_prod_id.returnPressed.connect(self.btn_search.click)
         self.txt_item_id.returnPressed.connect(self.btn_search.click)
         self.txt_item_name.returnPressed.connect(self.btn_search.click)
+
+        # 시간 마다 자동 실행 하는 함수
+        # QTimer 설정 (5분마다 실행)
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.get_args)  # 타이머가 끝나면 load_data 함수 실행
+        self.timer.start(1 * 60 * 1000)  # 5분(300,000ms) 설정
 
     def set_date(self):
         self.date_select_from.setDate(QDate.currentDate())

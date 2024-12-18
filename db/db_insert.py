@@ -94,7 +94,7 @@ class Insert:
 
         try:
             query = """
-                    INSERT INTO production_upload (p_order_id, item_id, item_name, status, dept_id, s_order_id, s_date, item_qty, order_min) 
+                    INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min) 
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
                     """
             cursor.executemany(query, arr)

@@ -114,8 +114,9 @@ class WindowClass(QMainWindow, main_window) :
         import stop_prod as stop_prod_window
 
         self.stop_prod_window = stop_prod_window.MainWindow()
-        self.setCentralWidget(self.stop_prod_window)
-        self.show()
+        self.stop_prod_window.show() # 중지 사유창을 별도로 띄우기
+        # self.setCentralWidget(self.stop_prod_window) # 중지 사유창을 메인창에 띄우기
+        # self.show()
 
     def prod_order_upload(self):
         import upload_prod as upload_prod_window
