@@ -712,7 +712,9 @@ class Select:
                         p_dept_id AS "할당파트",
                         dept_id AS "작업파트",
                         dept_name AS "작업파트명",
-                        s_order_id AS "판매오더"
+                        s_order_id AS "판매오더",
+                        order_type AS "오더구분",
+                        dept_origin AS "원인부서"
                     FROM 
                         production_info
                     WHERE
@@ -722,7 +724,9 @@ class Select:
                         item_id LIKE %s AND 
                         item_name LIKE %s AND 
                         STATUS LIKE %s AND 
-                        s_order_id LIKE %s;
+                        s_order_id LIKE %s AND
+                        order_type LIKE %s AND
+                        dept_origin LIKE %s;
                     """ 
             # s_date 컬럼의 날짜만을 평가하도록 DATE() 함수를 사용하여 s_date의 날짜 부분만을 비교.
             # 월로 비교 하기 AND DATE_FORMAT(a.overtime_date, "%%Y-%%m") BETWEEN %s AND %s

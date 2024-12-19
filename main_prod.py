@@ -51,18 +51,28 @@ class MainWindow(QWidget, main_window) :
         items_layout.addWidget(self.label_13)
         items_layout.addWidget(self.comb_prod_status)
         items_layout.addWidget(self.label_14)
-        items_layout.addWidget(self.txt_sales_id)        
+        items_layout.addWidget(self.txt_sales_id)
+        items_layout.addWidget(self.label_15)
+        items_layout.addWidget(self.comb_order_type)
+        items_layout.addWidget(self.label_16)
+        items_layout.addWidget(self.comb_dept_origin)                        
         items_layout.addWidget(self.btn_search)
 
         # 콤보박스 설정
-        items = ['', '릴리스됨', '시작됨', '중지됨', '종료됨']
-        self.comb_prod_status.addItems(items)
+        items_status = ['', '릴리스됨', '시작됨', '중지됨', '종료됨']
+        self.comb_prod_status.addItems(items_status)
+
+        items_order_type = ['', '생산오더', '분해오더', '재작업오더']
+        self.comb_order_type.addItems(items_order_type)
+
+        items_dept_origin = ['', '생산본부', '영업부']
+        self.comb_dept_origin.addItems(items_dept_origin)
 
         # 실행 버튼 레이아웃
         exec_layout = QHBoxLayout()
         exec_layout.addWidget(self.btn_download)
         exec_layout.addWidget(self.btn_close)
-        exec_layout.setAlignment(Qt.AlignRight)  # 오른쪽 정렬 추가
+        exec_layout.setAlignment(Qt.AlignRight)  # 화면 오른쪽으로 정렬렬
 
         # 전체 레이아웃
         main_layout = QVBoxLayout()
@@ -139,10 +149,22 @@ class MainWindow(QWidget, main_window) :
         else:
             p_dept_id = p_dept_id
 
+        order_type = self.comb_order_type.currentText()
+        if order_type == "":
+            order_type = '%%'
+        else:
+            order_type = order_type
+
+        dept_origin = self.comb_dept_origin.currentText()
+        if dept_origin == "":
+            dept_origin = '%%'
+        else:
+            dept_origin = dept_origin
+
         from_date = self.date_select_from.date().toString("yyyy-MM-dd")
         to_date = self.date_select_to.date().toString("yyyy-MM-dd")
 
-        arr_1 = [from_date, to_date, p_dept_id, p_order_id, item_id, item_name, status, s_order_id]
+        arr_1 = [from_date, to_date, p_dept_id, p_order_id, item_id, item_name, status, s_order_id, order_type, dept_origin]
         self.make_data(arr_1)
 
     def make_data(self, arr_1):

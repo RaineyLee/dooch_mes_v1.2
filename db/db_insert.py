@@ -92,12 +92,32 @@ class Insert:
     def insert_prod_info(self, arr):
         cursor = self.conn.cursor()
 
+        print(arr)
         try:
             query = """
-                    INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min) 
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min, order_type, dept_origin) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                     """
             cursor.executemany(query, arr)
+            self.conn.commit()
+            self.conn.close()
+
+        except Exception as e:
+            error = ("Error", str(e))
+            return error
+
+        return ("완료", "생산오더 정보가 업로드 되었습니다.")
+    
+    def input_prod_info(self, arr):
+        cursor = self.conn.cursor()
+
+        print(arr)
+        try:
+            query = """
+                    INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min, order_type, dept_origin) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    """
+            cursor.execute(query, arr)
             self.conn.commit()
             self.conn.close()
 
