@@ -189,9 +189,10 @@ class MainWindow(QWidget, main_window) :
         try:
             result = insert.input_prod_info(arr_1)
             self.msg_box(result[0], result[1])
+            self.clear()
         except Exception as e:
                 self.msg_box("Program Error", str(e))
-                return
+                self.clear()
 
     def msg_box(self, arg_1, arg_2):
         msg = QMessageBox()

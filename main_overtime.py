@@ -306,11 +306,11 @@ class MainWindow(QWidget, main_window) :
         self.emp_window = select_emp_window.MainWindow()
         self.emp_window.show() 
 
-    def select_month(self):
-        import emp_overtime_month as select_emp_month_window
+    # def select_month(self):
+    #     import emp_overtime_month as select_emp_month_window
 
-        self.emp_month_window = select_emp_month_window.MainWindow()
-        self.emp_month_window.show()     
+    #     self.emp_month_window = select_emp_month_window.MainWindow()
+    #     self.emp_month_window.show()     
     
     def update_emp(self):
         import emp_overtime_update as update_emp_window

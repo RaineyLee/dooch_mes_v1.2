@@ -51,6 +51,10 @@ class WindowClass(QMainWindow, main_window) :
         prod_stop_present.setStatusTip("중지사유")
         prod_stop_present.triggered.connect(self.prod_stop_present)
 
+        prod_order_input = QAction('생산오더_입력', self)
+        prod_order_input.setStatusTip("생산오더_입력")
+        prod_order_input.triggered.connect(self.prod_order_input)
+
         prod_order_upload = QAction('생산오더_업로드', self)
         prod_order_upload.setStatusTip("생산오더_업로드")
         prod_order_upload.triggered.connect(self.prod_order_upload)
@@ -95,6 +99,7 @@ class WindowClass(QMainWindow, main_window) :
         prod_menu.addAction(prod_present)
         prod_menu.addAction(prod_stop_present)
         prod_menu.addSeparator()
+        prod_menu.addAction(prod_order_input)
         prod_menu.addAction(prod_order_upload)
 
         overtime_menu.addAction(overtime_present)
@@ -118,12 +123,18 @@ class WindowClass(QMainWindow, main_window) :
         # self.setCentralWidget(self.stop_prod_window) # 중지 사유창을 메인창에 띄우기
         # self.show()
 
+    def prod_order_input(self):
+        import input_prod as input_prod_window
+
+        self.input_prod_window = input_prod_window.MainWindow()
+        self.input_prod_window.show()
+
     def prod_order_upload(self):
         import upload_prod as upload_prod_window
 
         self.upload_prod_window = upload_prod_window.MainWindow()
         self.setCentralWidget(self.upload_prod_window)
-        self.show()
+        self.setCentralWidget(self.upload_prod_window)
 
     def overtime_present(self):
         import main_overtime as main_overtime_window
