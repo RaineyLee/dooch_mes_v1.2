@@ -39,6 +39,32 @@ class Update:
             self.conn.close()
             self.msg_box("Error", str(e))
 
+    def update_back_sequence(self, num):
+        cursor = self.conn.cursor()
+
+        try:
+            query = """UPDATE get_number SET back_work = %s WHERE TYPE = '1';"""
+            cursor.execute(query, num)
+            self.conn.commit()
+            self.conn.close()    
+
+        except Exception as e:
+            self.conn.close()
+            self.msg_box("Error", str(e))
+
+    def update_re_sequence(self, num):
+        cursor = self.conn.cursor()
+
+        try:
+            query = """UPDATE get_number SET re_work = %s WHERE TYPE = '1';"""
+            cursor.execute(query, num)
+            self.conn.commit()
+            self.conn.close() 
+
+        except Exception as e:
+            self.conn.close()
+            self.msg_box("Error", str(e))
+
     def msg_box(self, msg_1, msg_2):
         msg = QMessageBox()
         msg.setWindowTitle(msg_1)               # 제목설정

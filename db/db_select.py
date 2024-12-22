@@ -794,6 +794,24 @@ class Select:
         except Exception as e:
             self.msg_box("DB Error", str(e))
 
+    # 반품, 재작업 자동채번용 조회
+    def get_sequence(self):
+        cursor = self.conn.cursor()
+
+        try:
+            query = """
+                    SELECT back_work AS "분해", re_work AS "재작업"
+                    FROM get_number
+                    WHERE type = 1;
+                    """
+            cursor.execute(query)
+            result = cursor.fetchone()
+
+            return result
+        
+        except Exception as e:
+            self.msg_box("DB Error", str(e))
+
     def msg_box(self, msg_1, msg_2):
         msg = QMessageBox()
         msg.setWindowTitle(msg_1)               # 제목설정

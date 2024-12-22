@@ -2,6 +2,7 @@ import sys
 sys.path.append("./db") #모듈 import가 안 될때 경로를 지정해 주기
 import db_info as conn_info
 import pymysql
+from PyQt5.QtWidgets import *
 
 class Insert:
 
@@ -92,7 +93,6 @@ class Insert:
     def insert_prod_info(self, arr):
         cursor = self.conn.cursor()
 
-        print(arr)
         try:
             query = """
                     INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min, order_type, dept_origin) 
@@ -111,7 +111,6 @@ class Insert:
     def input_prod_info(self, arr):
         cursor = self.conn.cursor()
 
-        print(arr)
         try:
             query = """
                     INSERT INTO production_upload (p_order_id, item_id, item_name, status, p_dept_id, s_order_id, s_date, item_qty, order_min, order_type, dept_origin) 
@@ -121,12 +120,12 @@ class Insert:
             self.conn.commit()
             self.conn.close()
 
-        except Exception as e:
-            error = ("Error", str(e))
-            return error
+            return True
 
-        return ("완료", "생산오더 정보가 업로드 되었습니다.")
-    
+        except Exception as e:
+            self.msg_box("Error", str(e))
+            return
+
     def update_emp_info(self, arr):
         cursor = self.conn.cursor()
 
@@ -163,6 +162,12 @@ class Insert:
             return error
 
         return ("완료", "인사정보가 입력 되었습니다.")
+    
+    def msg_box(self, arg_1, arg_2):
+        msg = QMessageBox()
+        msg.setWindowTitle(arg_1)               # 제목설정
+        msg.setText(arg_2)                          # 내용설정
+        msg.exec_()            
 
 # (send_date, order_num, order_date, customer_num, 
 #             order_customer, item_id, item_name, serial, ea, warehouse, message_1, destination, send_num, total_amount, second_amount, item_quantity, yesno, inout, item_loc, message_2, box_num, confirm_date, sending_date, message_3, date_1, date_2, ,emp_1, edit_date, completed)

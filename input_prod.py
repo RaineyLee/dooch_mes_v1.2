@@ -4,11 +4,8 @@ import sys
 # import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate, QSize
+from PyQt5.QtCore import Qt, QDate
 from PyQt5 import uic
-import openpyxl
-from openpyxl.styles import Alignment
-from datetime import datetime
 
 # 절대경로를 상대경로로 변경 하는 함수
 def resource_path(relative_path):
@@ -136,9 +133,39 @@ class MainWindow(QWidget, main_window) :
     def slots(self):
         self.btn_save.clicked.connect(self.get_args)
         self.btn_close.clicked.connect(self.window_close)
+        self.comb_order_type.currentIndexChanged.connect(self.get_order_id)
 
     def set_date(self):
         self.date_s_date.setDate(QDate.currentDate())
+
+    def get_order_id(self):
+        arg_1 : str = self.comb_order_type.currentText()
+
+        from db.db_select import Select
+        select_sequence = Select()
+
+        try:
+            result = select_sequence.get_sequence()
+
+            if arg_1 == "분해오더":
+                num = int(result[0]) + 1
+
+                self.txt_p_order_id.setText(str(num))
+                self.txt_p_order_id.setReadOnly(True)
+            elif arg_1 == "재작업오더":
+                num = int(result[1]) + 1
+
+                self.txt_p_order_id.setText(str(num))
+                self.txt_p_order_id.setReadOnly(True)
+            elif arg_1 == "생산오더" or arg_1 == "":
+                self.txt_p_order_id.setText("")
+                self.txt_p_order_id.setReadOnly(False)
+            else:
+                return
+        except Exception as e:
+            self.msg_box("Program Error", str(e))
+            return
+        
 
     def clear(self):     
         self.comb_order_type.setCurrentIndex(0)
@@ -153,6 +180,8 @@ class MainWindow(QWidget, main_window) :
         self.date_s_date.setDate(QDate.currentDate())   
         self.comb_p_dept_id.setCurrentIndex(0)
 
+        
+
     def get_args(self):
 
         #  DB에 입력할 값 수집
@@ -163,6 +192,8 @@ class MainWindow(QWidget, main_window) :
         item_name = self.txt_item_name.text()
         item_qty = self.txt_item_qty.text()
         order_min = self.txt_order_min.text()
+        if order_min == "":
+            order_min = 0
         status = self.comb_status.currentText()
         s_order_id = self.txt_s_order_id.text()
         s_date = self.date_s_date.dateTime().toString("yyyy-MM-dd hh:mm:ss")
@@ -188,11 +219,49 @@ class MainWindow(QWidget, main_window) :
 
         try:
             result = insert.input_prod_info(arr_1)
-            self.msg_box(result[0], result[1])
-            self.clear()
-        except Exception as e:
-                self.msg_box("Program Error", str(e))
+            if result == True:
+                self.msg_box("저장 결과", "정상적으로 저장 되었습니다.")
+                self.update_sequence()
+            else:
                 self.clear()
+
+        except Exception as e:
+                self.msg_box("저장 에러", str(e))
+                return
+        
+    def update_sequence(self):
+        arg_1 : str = self.comb_order_type.currentText()
+
+        from db.db_select import Select
+        select = Select()
+
+        try:
+            result = select.get_sequence()
+
+            if arg_1 == "분해오더":
+                num = int(result[0]) + 1
+
+                from db.db_update import Update
+                update = Update()
+               
+                result = update.update_back_sequence(num)
+
+            elif arg_1 == "재작업오더":
+                num = int(result[1]) + 1
+
+                from db.db_update import Update
+                update = Update()
+
+                result = update.update_re_sequence(num)
+
+            else:
+                return ""
+
+        except Exception as e:
+            self.msg_box("Program Error", str(e))
+            return
+        
+        self.clear()       
 
     def msg_box(self, arg_1, arg_2):
         msg = QMessageBox()
