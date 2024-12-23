@@ -214,7 +214,6 @@ class MainWindow(QWidget, main_window) :
                 self.upload(list)
             else:
                 db_index = _check
-                print(db_index)
 
                 reply = QMessageBox.question(self, 'Message', '중복된 생산지시번호가 있습니다. 삭제하시겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                 if reply == QMessageBox.Yes:
@@ -248,7 +247,6 @@ class MainWindow(QWidget, main_window) :
         #     except:
         #         self.msg_box("입력오류", "잔업시간 값이 숫자가 아닙니다.")
         #         return
-        print(list)
 
         from db.db_insert import Insert
         data_insert = Insert()

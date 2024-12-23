@@ -115,7 +115,6 @@ class MainWindow(QWidget, main_window) :
         to_date = self.date_select_to.date().toString("yyyy-MM-dd")
 
         arr_1 = [from_date, to_date, p_order_id, item_id, item_name]
-        print(arr_1)
         self.make_data(arr_1)
 
     def make_data(self, arr_1):
