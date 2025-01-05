@@ -20,7 +20,7 @@ main_window= uic.loadUiType(resource_path("./ui/main_window.ui"))[0] # Window ì‚
 class WindowClass(QMainWindow, main_window) :
     def __init__(self) :
         super().__init__()
-        self.version = 1.0
+        self.version = 1.2
         self.slots()
 
         self.mainwindow()
