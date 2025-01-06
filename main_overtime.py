@@ -30,6 +30,8 @@ class MainWindow(QWidget, main_window) :
         super().__init__()
 
         self.setupUi(self)
+        self.setWindowTitle("잔업시간 조회/통계")
+
         self.canvas_bar = None
         self.canvas_pie = None
 
