@@ -745,6 +745,50 @@ class Select:
         except Exception as e:
             self.msg_box("DB Error", str(e))
 
+     # Display용 생산정보 조회회
+    def select_prod_info_display(self, arr_1):
+        cursor = self.conn.cursor()
+
+        try:
+            # pymysql을 통해 쿼리 입력할 때, 아래와 같은 오류 문구를 만나곤 한다.
+            # ValueError: unsupported format character 'Y' (0x59) at index
+            # 이는 쿼리의 변수 표현에 쓰이는 %s와 data format 변경하는 (예시에서는 DATE_FORMAT) 에서의 %를 구분해주지 않았기 때문이다.
+            # SELECT DATE_FORMAT(DeviceReportedTime, '%Y-%m-%d %H:%i:%s') AS date, Facility, Priority, FromHost, FromIP, Message FROM SystemEvents WHERE DeviceReportedTime BETWEEN '%s 00:00:00' AND '%s 23:59:59' ORDER BY DeviceReportedTime DESC
+            # 위와 같이 작성하면 오류가 발생하는 것이다.            
+            # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
+
+            query = """
+                    SELECT 
+                        p_order_id AS "생산오더", 
+                        item_id AS "품목코드", 
+                        item_name AS "품목명", 
+                        item_qty AS "수량",
+                        STATUS AS "상태", 
+                    FROM 
+                        production_info
+                    WHERE
+                        dept_id LIKE %s AND
+                        STATUS In (%s, %s);
+                    """ 
+            # s_date 컬럼의 날짜만을 평가하도록 DATE() 함수를 사용하여 s_date의 날짜 부분만을 비교.
+            # 월로 비교 하기 AND DATE_FORMAT(a.overtime_date, "%%Y-%%m") BETWEEN %s AND %s
+            #날짜를 비교 하기 위해 안쪽 select문 사용, qt 테이블 입력을 위해 날짜 형식을 문자로 바꾸려고 밖의 select문 사용
+            cursor.execute(query, arr_1) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
+            result = cursor.fetchall()
+
+            column_names = [description[0] for description in cursor.description] # 컬럼명 조회후 리스트로 만듬
+
+            if result:
+                self.conn.close()
+                return result, column_names
+            else:
+                self.conn.close()
+                self.msg_box("조회결과", "조회결과가 없습니다.")
+                return            
+
+        except Exception as e:
+            self.msg_box("DB Error", str(e))
+
     # 중지사유 조회
     def select_stop_info(self, arr_1):
         cursor = self.conn.cursor()
