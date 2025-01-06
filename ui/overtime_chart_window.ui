@@ -26,6 +26,16 @@
     <item>
      <widget class="QTableWidget" name="tbl_dept_info"/>
     </item>
+    <item>
+     <widget class="QTableWidget" name="tbl_dept_sum_info">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">

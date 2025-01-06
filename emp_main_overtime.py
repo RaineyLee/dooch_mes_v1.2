@@ -1,7 +1,7 @@
 import os
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import Qt
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -63,7 +63,7 @@ class MainWindow(QWidget, main_window):
     def monthly_emp_report(self):
         self.tbl_emp_info.show()
         
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         result, column_names = select.select_emp_monthly()
 
@@ -118,7 +118,7 @@ class MainWindow(QWidget, main_window):
         self.tbl_emp_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def monthly_sum_report(self):        
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         result, column_names = select.select_monthly_sum()
 

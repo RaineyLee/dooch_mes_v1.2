@@ -50,6 +50,7 @@ class MainWindow(QWidget, main_window) :
         self.table_layout = QVBoxLayout()
         self.chart_layout = QHBoxLayout()
         self.table_layout.addWidget(self.tbl_dept_info)
+        self.table_layout.addWidget(self.tbl_dept_sum_info)
         self.chart_layout.addWidget(self.canvas_bar)
         self.chart_layout.addWidget(self.canvas_pie)
         
@@ -169,9 +170,10 @@ class MainWindow(QWidget, main_window) :
     def monthly_sum_report(self):
         from db.db_select_overtime import Select
         select = Select()
-        result, column_names = select.select_monthly_sum()
+        result, column_names = select.select_monthly_sum_main()
 
         self.make_chart(column_names, result)
+        self.make_dept_sum_table(column_names, result)
 
     def make_dept_table(self, num, arr_1, column_names):   
         self.tbl_dept_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
@@ -215,6 +217,50 @@ class MainWindow(QWidget, main_window) :
 
         # 테이블의 길이에 맞추어 컬럼 길이를 균등하게 확장
         self.tbl_dept_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+    def make_dept_sum_table(self, column_names, arr_1):   
+        self.tbl_dept_sum_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
+
+        col = len(column_names)
+        num = len(arr_1)
+
+        self.tbl_dept_sum_info.setRowCount(num)
+        self.tbl_dept_sum_info.setColumnCount(col)
+        self.tbl_dept_sum_info.setHorizontalHeaderLabels(column_names)
+
+        for i in range(num):
+            for j in range(col): # 아니면 10개
+                cell_value = arr_1[i][j]
+
+                item = QTableWidgetItem(str(cell_value))
+                item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+
+                # 셀 값이 0인 경우 문자 색을 흰색으로 설정
+                if cell_value == 0:
+                    item.setForeground(QBrush(QColor(255, 255, 255)))
+
+                self.tbl_dept_sum_info.setItem(i, j, item)
+
+        # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
+        ################################################################
+        table = self.tbl_dept_sum_info
+        header = table.horizontalHeader()
+
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
+
+        for i in range(col):
+            header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        ################################################################
+
+        # 테이블의 길이에 맞추어 컬럼 길이를 균등하게 확장
+        self.tbl_dept_sum_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     
      # 테이블에 남겨진 정보를 엑셀로 변환

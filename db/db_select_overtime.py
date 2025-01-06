@@ -561,7 +561,21 @@ class Select:
                             SELECT * FROM overtime
                         ) T
                     GROUP BY dept_name
-                    ORDER BY dept_name;""" 
+                    HAVING
+                        SUM(CASE WHEN yyyy_mm = '2025-01' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-02' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-03' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-04' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-05' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-06' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-07' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-08' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-09' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-10' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-11' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-12' THEN overtime ELSE 0 END) > 0
+                    ORDER BY dept_name
+                        ;""" 
                     # 월로 비교 하기 AND DATE_FORMAT(a.overtime_date, "%%Y-%%m") BETWEEN %s AND %s
                                 #날짜를 비교 하기 위해 안쪽 select문 사용, qt 테이블 입력을 위해 날짜 형식을 문자로 바꾸려고 밖의 select문 사용
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
@@ -608,7 +622,72 @@ class Select:
                     FROM (    
                             SELECT * FROM overtime
                         ) T
-                    GROUP BY dept_name, emp_name;""" 
+                    GROUP BY dept_name, emp_name
+                    HAVING 
+                        SUM(CASE WHEN yyyy_mm = '2025-01' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-02' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-03' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-04' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-05' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-06' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-07' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-08' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-09' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-10' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-11' THEN overtime ELSE 0 END) > 0 OR
+                        SUM(CASE WHEN yyyy_mm = '2025-12' THEN overtime ELSE 0 END) > 0
+                    ;""" 
+            cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
+            result = cursor.fetchall()
+
+            column_names = [description[0] for description in cursor.description] # 컬럼명 조회후 리스트로 만듬
+
+            if result:
+                self.conn.close()
+                return result, column_names
+            else:
+                self.conn.close()
+                self.msg_box("조회결과", "조회결과가 없습니다.")
+                return            
+
+        except Exception as e:
+            self.msg_box("Error", str(e))
+
+    def select_monthly_sum_main(self):
+        cursor = self.conn.cursor()
+
+        try:
+            # pymysql을 통해 쿼리 입력할 때, 아래와 같은 오류 문구를 만나곤 한다.
+            # ValueError: unsupported format character 'Y' (0x59) at index
+            # 이는 쿼리의 변수 표현에 쓰이는 %s와 data format 변경하는 (예시에서는 DATE_FORMAT) 에서의 %를 구분해주지 않았기 때문이다.
+            # SELECT DATE_FORMAT(DeviceReportedTime, '%Y-%m-%d %H:%i:%s') AS date, Facility, Priority, FromHost, FromIP, Message FROM SystemEvents WHERE DeviceReportedTime BETWEEN '%s 00:00:00' AND '%s 23:59:59' ORDER BY DeviceReportedTime DESC
+            # 위와 같이 작성하면 오류가 발생하는 것이다.            
+            # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
+
+            query = """SELECT
+                            "생산본부" AS "부서",
+                            SUM(CASE WHEN yyyy_mm = '2025-01' THEN overtime ELSE 0 END) AS '2025-01',
+                            SUM(CASE WHEN yyyy_mm = '2025-02' THEN overtime ELSE 0 END) AS '2025-02',
+                            SUM(CASE WHEN yyyy_mm = '2025-03' THEN overtime ELSE 0 END) AS '2025-03',
+                            SUM(CASE WHEN yyyy_mm = '2025-04' THEN overtime ELSE 0 END) AS '2025-04',
+                            SUM(CASE WHEN yyyy_mm = '2025-05' THEN overtime ELSE 0 END) AS '2025-05',
+                            SUM(CASE WHEN yyyy_mm = '2025-06' THEN overtime ELSE 0 END) AS '2025-06',
+                            SUM(CASE WHEN yyyy_mm = '2025-07' THEN overtime ELSE 0 END) AS '2025-07',
+                            SUM(CASE WHEN yyyy_mm = '2025-08' THEN overtime ELSE 0 END) AS '2025-08',
+                            SUM(CASE WHEN yyyy_mm = '2025-09' THEN overtime ELSE 0 END) AS '2025-09',
+                            SUM(CASE WHEN yyyy_mm = '2025-10' THEN overtime ELSE 0 END) AS '2025-10',
+                            SUM(CASE WHEN yyyy_mm = '2025-11' THEN overtime ELSE 0 END) AS '2025-11',
+                            SUM(CASE WHEN yyyy_mm = '2025-12' THEN overtime ELSE 0 END) AS '2025-12'
+                        FROM (
+                            SELECT 
+                                yyyy_mm,
+                                SUM(overtime) AS overtime
+                            FROM overtime
+                            WHERE yyyy_mm BETWEEN '2025-01' AND '2025-12'  -- Ensure data is filtered for the year 2025
+                            GROUP BY yyyy_mm
+                        ) AS T
+                        GROUP BY "부서";"""
+            
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
             result = cursor.fetchall()
 
@@ -637,7 +716,8 @@ class Select:
             # DATE_FORMAT 안의 %를 %%로 변경해주어 아래와 같은 코드로 변경해주자. 
 
             query = """SELECT
-                            "합계" AS "날짜",
+                            "생산본부" AS "부서",
+                            "전체" AS "작업자",
                             SUM(CASE WHEN yyyy_mm = '2025-01' THEN overtime ELSE 0 END) AS '2025-01',
                             SUM(CASE WHEN yyyy_mm = '2025-02' THEN overtime ELSE 0 END) AS '2025-02',
                             SUM(CASE WHEN yyyy_mm = '2025-03' THEN overtime ELSE 0 END) AS '2025-03',
@@ -655,10 +735,10 @@ class Select:
                                 yyyy_mm,
                                 SUM(overtime) AS overtime
                             FROM overtime
-                            WHERE yyyy_mm BETWEEN '2024-01' AND '2024-12'  -- Ensure data is filtered for the year 2024
+                            WHERE yyyy_mm BETWEEN '2025-01' AND '2025-12'  -- Ensure data is filtered for the year 2024
                             GROUP BY yyyy_mm
                         ) AS T
-                        GROUP BY "합계";"""
+                        GROUP BY "부서", "작업자";"""
             
             cursor.execute(query) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
             result = cursor.fetchall()
