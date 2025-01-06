@@ -763,7 +763,7 @@ class Select:
                         item_id AS "품목코드", 
                         item_name AS "품목명", 
                         item_qty AS "수량",
-                        STATUS AS "상태", 
+                        STATUS AS "상태"
                     FROM 
                         production_info
                     WHERE

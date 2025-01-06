@@ -47,9 +47,9 @@ class WindowClass(QMainWindow, main_window) :
         prod_present.setStatusTip("작업현황")
         prod_present.triggered.connect(self.prod_present)
 
-        prod_present = QAction('작업진행', self)
-        prod_present.setStatusTip("작업진행")
-        prod_present.triggered.connect(self.prod_progress)
+        prod_progress = QAction('작업진행', self)
+        prod_progress.setStatusTip("작업진행")
+        prod_progress.triggered.connect(self.prod_progress)
 
         prod_stop_present = QAction('중지사유', self)
         prod_stop_present.setStatusTip("중지사유")
@@ -101,6 +101,7 @@ class WindowClass(QMainWindow, main_window) :
         # emp_master.triggered.connect(self.emp_master)
 
         prod_menu.addAction(prod_present)
+        prod_menu.addAction(prod_progress)
         prod_menu.addAction(prod_stop_present)
         prod_menu.addSeparator()
         prod_menu.addAction(prod_order_input)
@@ -120,7 +121,11 @@ class WindowClass(QMainWindow, main_window) :
         self.show()
 
     def prod_progress(self):
-        pass
+        import prod_progress as prod_progress_window
+
+        self.prod_progress_window = prod_progress_window.MainWindow()
+        self.setCentralWidget(self.prod_progress_window)
+        self.show()
 
     def prod_stop_present(self):
         import stop_prod as stop_prod_window

@@ -51,7 +51,7 @@
        <widget class="QComboBox" name="comb_dept_name">
         <property name="maximumSize">
          <size>
-          <width>100</width>
+          <width>150</width>
           <height>30</height>
          </size>
         </property>
@@ -71,6 +71,12 @@
           <height>30</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
        </widget>
       </item>
       <item>
@@ -88,9 +94,15 @@
       </item>
       <item>
        <widget class="QPushButton" name="btn_search">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>50</width>
+          <width>80</width>
           <height>30</height>
          </size>
         </property>
@@ -101,7 +113,7 @@
          </font>
         </property>
         <property name="text">
-         <string>조회</string>
+         <string>조 회</string>
         </property>
        </widget>
       </item>
@@ -109,9 +121,15 @@
     </item>
     <item>
      <widget class="QTableWidget" name="tbl_info">
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
-        <pointsize>36</pointsize>
+        <pointsize>48</pointsize>
        </font>
       </property>
      </widget>

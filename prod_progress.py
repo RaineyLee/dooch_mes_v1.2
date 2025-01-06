@@ -4,7 +4,7 @@ import sys
 # import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -40,11 +40,14 @@ class MainWindow(QWidget, main_window) :
         layout_item.addWidget(self.lbl_dept)
         layout_item.addWidget(self.comb_dept_name)
         layout_item.addWidget(self.txt_dept_id)
+        self.txt_dept_id.setAlignment(Qt.AlignCenter)
+        layout_item.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
         layout_item.addWidget(self.btn_search)
+        layout_item.setAlignment(Qt.AlignLeft)
 
         # 콤보박스 설정        
         dept_name = ['', '생산팀-1파트', '생산팀-2파트', '생산팀-3파트', '생산팀-1,4파트']
-        self.comb_dept.addItems(dept_name)
+        self.comb_dept_name.addItems(dept_name)
 
         # 전체 레이아웃
         layout_main = QVBoxLayout()
@@ -56,11 +59,17 @@ class MainWindow(QWidget, main_window) :
 
     def slots(self):
         self.btn_search.clicked.connect(self.get_args)
-        self.comb_dept.currentIndexChanged.connect(self.get_dept_id)
+        self.comb_dept_name.currentIndexChanged.connect(self.get_dept_id)
+
+        # 시간 마다 자동 실행 하는 함수
+        # QTimer 설정 (5분마다 실행)
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.get_args)  # 타이머가 끝나면 load_data 함수 실행
+        self.timer.start(1 * 60 * 1000)  # 1분(60,000ms) 설정
 
     def get_dept_id(self):        
         # dept combobox 값 가져오기
-        idx = self.comb_dept.currentIndex()
+        idx = self.comb_dept_name.currentIndex()
         dept_id = ['', '1100', '1200', '1300', '1410']
 
         # 콤보박스 인덱스와 부서ID 매칭
@@ -83,11 +92,11 @@ class MainWindow(QWidget, main_window) :
         select = Select()
 
         try:
-            result, column_names = select.select_prod_info(arr_1)
+            result, column_names = select.select_prod_info_display(arr_1)
             self.make_table(len(result), result, column_names)
         except Exception as e:
-                return
                 self.msg_box("Program Error", str(e))
+                return
 
     def make_table(self, num, arr_1, column_names):   
         self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화
@@ -108,10 +117,10 @@ class MainWindow(QWidget, main_window) :
                     cell_value = ""
 
                 item = QTableWidgetItem(str(cell_value))
-                
+
                 try:
-                    value = float(str(cell_value))
-                    if value < 0:
+                    value = str(cell_value)
+                    if value == '중지됨':
                         item.setBackground(Qt.red)
                 except ValueError:
                     pass
@@ -133,11 +142,6 @@ class MainWindow(QWidget, main_window) :
                 # 전체 중앙 정렬
                 #self.tbl_info.item(i, j).setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)     
 
-        # 테이블 서식 설정
-
-        # 컬럼 데이터 정렬
-        # 3번째 컬럼만 왼쪽 정렬
-        # 컬럼 헤더를 인터랙티브 모드로 설정 + 데이터 길이에 맞추어 확장 가능하도록 설정
         table = self.tbl_info
         header = table.horizontalHeader()
 
@@ -150,13 +154,16 @@ class MainWindow(QWidget, main_window) :
             }
         """)
 
-        # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
-        for i in range(table.columnCount()):
-            if i in [2, 4, 8, 9]:  # 특정 컬럼은 길이에 맞추어 조정
-                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        # # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
+        # for i in range(table.columnCount()):
+        #     if i in [2, 4, 8, 9]:  # 특정 컬럼은 길이에 맞추어 조정
+        #         header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
                 
-            else:  # 나머지 컬럼은 Interactive
-                header.setSectionResizeMode(i, QHeaderView.Interactive)
+        #     else:  # 나머지 컬럼은 Interactive
+        #         header.setSectionResizeMode(i, QHeaderView.Interactive)
+
+        # 행 높이를 텍스트에 맞게 자동 조정
+        self.tbl_info.resizeRowsToContents()
 
         # 정렬 기능 활성화
         self.tbl_info.setSortingEnabled(True)
@@ -209,15 +216,15 @@ class MainWindow(QWidget, main_window) :
         # # 마지막 컬럼도 Stretch 비율로 포함
         # header.setStretchLastSection(True)
 
-        # # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
-        # # 이 방법은 컬럼의 길이를 마우스로 조절할 수 없게 함.
-        # ################################################################
-        # table = self.tbl_info
-        # header = table.horizontalHeader()
+        # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
+        # 이 방법은 컬럼의 길이를 마우스로 조절할 수 없게 함.
+        ################################################################
+        table = self.tbl_info
+        header = table.horizontalHeader()
 
-        # for i in range(col):
-        #     header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
-        # ################################################################
+        for i in range(col):
+            header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        ################################################################
        
 
 
