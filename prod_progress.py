@@ -5,6 +5,7 @@ import sys
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QFont
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment
@@ -145,6 +146,11 @@ class MainWindow(QWidget, main_window) :
         table = self.tbl_info
         header = table.horizontalHeader()
 
+        # 헤더 글자크기 변경
+        header_font = QFont()
+        header_font.setPointSize(48)
+        self.tbl_info.horizontalHeader().setFont(header_font)
+
         # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
         table.setStyleSheet("""
             QHeaderView::section {
@@ -169,7 +175,7 @@ class MainWindow(QWidget, main_window) :
         self.tbl_info.setSortingEnabled(True)
 
         # 마지막 컬럼도 Stretch 비율로 포함
-        header.setStretchLastSection(False)
+        header.setStretchLastSection(True)
 
         # 컬럼 헤더를 인터랙티브 모드로 설정하여 마우스로 조절 가능하게 함
         # header.setSectionResizeMode(QHeaderView.Interactive)
