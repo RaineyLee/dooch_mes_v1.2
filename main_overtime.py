@@ -160,14 +160,14 @@ class MainWindow(QWidget, main_window) :
     def monthly_dept_report(self):
         self.tbl_dept_info.show()
         
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         result, column_names = select.select_dept_monthly()
 
         self.make_dept_table(len(result), result, column_names)
 
     def monthly_sum_report(self):
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         result, column_names = select.select_monthly_sum()
 

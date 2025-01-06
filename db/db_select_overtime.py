@@ -593,18 +593,18 @@ class Select:
 
             query = """SELECT
                         dept_name AS "부서명", emp_name AS "사원명",
-                        SUM(CASE WHEN yyyy_mm = '2024-01' THEN overtime ELSE 0 END) AS '2024-01',
-                        SUM(CASE WHEN yyyy_mm = '2024-02' THEN overtime ELSE 0 END) AS '2024-02',
-                        SUM(CASE WHEN yyyy_mm = '2024-03' THEN overtime ELSE 0 END) AS '2024-03',
-                        SUM(CASE WHEN yyyy_mm = '2024-04' THEN overtime ELSE 0 END) AS '2024-04',
-                        SUM(CASE WHEN yyyy_mm = '2024-05' THEN overtime ELSE 0 END) AS '2024-05',
-                        SUM(CASE WHEN yyyy_mm = '2024-06' THEN overtime ELSE 0 END) AS '2024-06',
-                        SUM(CASE WHEN yyyy_mm = '2024-07' THEN overtime ELSE 0 END) AS '2024-07',
-                        SUM(CASE WHEN yyyy_mm = '2024-08' THEN overtime ELSE 0 END) AS '2024-08',
-                        SUM(CASE WHEN yyyy_mm = '2024-09' THEN overtime ELSE 0 END) AS '2024-09',
-                        SUM(CASE WHEN yyyy_mm = '2024-10' THEN overtime ELSE 0 END) AS '2024-10',
-                        SUM(CASE WHEN yyyy_mm = '2024-11' THEN overtime ELSE 0 END) AS '2024-11',
-                        SUM(CASE WHEN yyyy_mm = '2024-12' THEN overtime ELSE 0 END) AS '2024-12'
+                        SUM(CASE WHEN yyyy_mm = '2025-01' THEN overtime ELSE 0 END) AS '2025-01',
+                        SUM(CASE WHEN yyyy_mm = '2025-02' THEN overtime ELSE 0 END) AS '2025-02',
+                        SUM(CASE WHEN yyyy_mm = '2025-03' THEN overtime ELSE 0 END) AS '2025-03',
+                        SUM(CASE WHEN yyyy_mm = '2025-04' THEN overtime ELSE 0 END) AS '2025-04',
+                        SUM(CASE WHEN yyyy_mm = '2025-05' THEN overtime ELSE 0 END) AS '2025-05',
+                        SUM(CASE WHEN yyyy_mm = '2025-06' THEN overtime ELSE 0 END) AS '2025-06',
+                        SUM(CASE WHEN yyyy_mm = '2025-07' THEN overtime ELSE 0 END) AS '2025-07',
+                        SUM(CASE WHEN yyyy_mm = '2025-08' THEN overtime ELSE 0 END) AS '2025-08',
+                        SUM(CASE WHEN yyyy_mm = '2025-09' THEN overtime ELSE 0 END) AS '2025-09',
+                        SUM(CASE WHEN yyyy_mm = '2025-10' THEN overtime ELSE 0 END) AS '2025-10',
+                        SUM(CASE WHEN yyyy_mm = '2025-11' THEN overtime ELSE 0 END) AS '2025-11',
+                        SUM(CASE WHEN yyyy_mm = '2025-12' THEN overtime ELSE 0 END) AS '2025-12'
                     FROM (    
                             SELECT * FROM overtime
                         ) T
