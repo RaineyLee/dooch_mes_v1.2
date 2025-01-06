@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1378</width>
+    <width>1374</width>
     <height>790</height>
    </rect>
   </property>
@@ -61,7 +61,7 @@
     <rect>
      <x>10</x>
      <y>730</y>
-     <width>158</width>
+     <width>163</width>
      <height>41</height>
     </rect>
    </property>
@@ -83,6 +83,14 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>다운로드</string>
       </property>
@@ -96,6 +104,14 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>닫기</string>
       </property>
@@ -108,13 +124,21 @@
     <rect>
      <x>10</x>
      <y>30</y>
-     <width>1351</width>
+     <width>1561</width>
      <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="items_layout">
     <item>
      <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>날짜</string>
       </property>
@@ -127,6 +151,14 @@
         <width>0</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="calendarPopup">
        <bool>true</bool>
@@ -141,6 +173,14 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="calendarPopup">
        <bool>true</bool>
       </property>
@@ -148,6 +188,14 @@
     </item>
     <item>
      <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>제조파트</string>
       </property>
@@ -157,14 +205,30 @@
      <widget class="QLineEdit" name="txt_p_dept_id">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>80</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_10">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>생산오더</string>
       </property>
@@ -174,14 +238,30 @@
      <widget class="QLineEdit" name="txt_prod_id">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>80</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_11">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>제품아이디</string>
       </property>
@@ -191,14 +271,30 @@
      <widget class="QLineEdit" name="txt_item_id">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>80</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_12">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>제품명</string>
       </property>
@@ -212,10 +308,26 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_13">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>STATUS</string>
       </property>
@@ -229,10 +341,26 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_14">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>판매오더</string>
       </property>
@@ -246,10 +374,26 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_15">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>오더구분</string>
       </property>
@@ -263,10 +407,26 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_16">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>원인부서</string>
       </property>
@@ -280,6 +440,14 @@
         <height>30</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
      </widget>
     </item>
     <item>
@@ -289,6 +457,14 @@
         <width>0</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>조회</string>

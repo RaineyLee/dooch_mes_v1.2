@@ -36,6 +36,21 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QLabel" name="lbl_inform">
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>막대그래프를 클릭 하면 해당월의 파이차트를 확인 할 수 있습니다.</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">

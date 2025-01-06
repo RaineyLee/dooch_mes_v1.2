@@ -72,6 +72,10 @@ class WindowClass(QMainWindow, main_window) :
         overtime_emp_present.setStatusTip("사원별 잔업현황")
         overtime_emp_present.triggered.connect(self.overtime_emp_present)
 
+        overtime_input = QAction('잔업시간 입력', self)
+        overtime_input.setStatusTip("잔업시간 입력")
+        overtime_input.triggered.connect(self.overtime_input)
+
         # select_dept = QAction('부서별 조회', self)
         # select_dept.setStatusTip("부서별 조회")
         # select_dept.triggered.connect(self.select_dept)
@@ -109,6 +113,9 @@ class WindowClass(QMainWindow, main_window) :
 
         overtime_menu.addAction(overtime_present)
         overtime_menu.addAction(overtime_emp_present)
+        overtime_menu.addSeparator()
+        overtime_menu.addAction(overtime_input)
+
 
         status_bar = self.statusBar()
         self.setStatusBar(status_bar)
@@ -161,6 +168,12 @@ class WindowClass(QMainWindow, main_window) :
         self.main_overtime_window = emp_overtime_window.MainWindow()
         self.setCentralWidget(self.main_overtime_window)
         self.show()
+
+    def overtime_input(self):
+        import emp_overtime_input as emp_overtime_input_window
+
+        self.emp_overtime_input_window = emp_overtime_input_window.MainWindow()
+        self.emp_overtime_input_window.show()
 
     def select_dept(self):
         import dept_overtime as select_dept_window

@@ -57,6 +57,7 @@ class MainWindow(QWidget, main_window) :
         # 메인 레이아웃에 추가
         self.main_layout.addLayout(self.table_layout)
         self.main_layout.setAlignment(Qt.AlignTop)  # 위쪽 정렬
+        self.main_layout.addWidget(self.lbl_inform)
         self.main_layout.addLayout(self.chart_layout)
 
         self.setLayout(self.main_layout)

@@ -176,8 +176,7 @@ class MainWindow(QWidget, main_window) :
             result, column_names = select.select_prod_info(arr_1)
             self.make_table(len(result), result, column_names)
         except Exception as e:
-                return
-                self.msg_box("Program Error", str(e))
+                return self.msg_box("Error", str(e))
 
     def make_table(self, num, arr_1, column_names):   
         self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화

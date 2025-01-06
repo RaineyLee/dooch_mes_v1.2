@@ -87,7 +87,7 @@ class MainWindow(QWidget, emp_overtime_input_window) :
         self.btn_select_emp.clicked.connect(self.popup_emp_info)
         self.btn_input.clicked.connect(self.input_data)
         self.btn_delete.clicked.connect(self.delete_rows)
-        self.btn_save.clicked.connect(self.upload)
+        self.btn_save.clicked.connect(self.confirm_upload)
         self.time_start.timeChanged.connect(self.calculate_overtime)
         self.time_end.timeChanged.connect(self.calculate_overtime)
         self.txt_dept_name.textChanged.connect(self.clear_empinfo)
@@ -197,6 +197,11 @@ class MainWindow(QWidget, emp_overtime_input_window) :
         # 선택행 삭제
         for rowid in rows:
             self.tbl_info.removeRow(rowid)
+    
+    def confirm_upload(self):
+        reply = QMessageBox.question(self, 'Message', '잔업정보를 등록 하시겠습니까까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.upload()
 
     def upload(self):
         # 현재 테이블 데이터(수정, 삭제 될 수 있다.)
@@ -211,7 +216,7 @@ class MainWindow(QWidget, emp_overtime_input_window) :
                 list_1.append(data.text())
             list.append(list_1)
 
-        from db.db_insert import Insert
+        from db.db_insert_overtime import Insert
         data_insert = Insert()
         result = data_insert.insert_overtime(list)
 

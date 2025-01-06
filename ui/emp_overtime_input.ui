@@ -24,7 +24,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="layout_item_1">
       <item>
        <widget class="QLabel" name="lbl_select_file">
         <property name="font">
@@ -236,7 +236,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="layout_item_2">
       <item>
        <widget class="QLabel" name="lbl_select_file_4">
         <property name="font">
@@ -505,7 +505,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="layout_item_3">
       <item>
        <widget class="QPushButton" name="btn_delete">
         <property name="minimumSize">
