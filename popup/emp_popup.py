@@ -37,7 +37,7 @@ class EmpWindow(QDialog, emp_window):
         self.tbl_info.cellDoubleClicked.connect(self.accept)
 
     def make_table(self):
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         select_emp = select.select_employee(self.dept_id)
 

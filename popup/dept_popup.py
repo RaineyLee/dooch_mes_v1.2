@@ -35,7 +35,7 @@ class DeptWindow(QDialog, dept_window):
         self.tbl_info.cellDoubleClicked.connect(self.accept)
 
     def make_table(self):
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         select_dept = select.select_department()
 

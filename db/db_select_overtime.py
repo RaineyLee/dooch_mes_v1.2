@@ -15,7 +15,7 @@ class Select:
         self.db = db_info.database
         self.port = db_info.port
 
-        self.conn = pymysql.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db, port=self.port, use_unicode=True, charset='utf8')  
+        self.conn = pymysql.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db, port=self.port, use_unicode=True, charset='utf8') 
 
     def select_version(self):
         cursor = self.conn.cursor()
@@ -105,6 +105,7 @@ class Select:
                         FROM department a, employee b 
                         WHERE b.dept_id = a.dept_id 
                         AND a.dept_id = %s
+                        AND b.yn = "y"
                         ORDER BY b.emp_id;""" #날짜를 비교 하기 위해 안쪽 select문 사용, qt 테이블 입력을 위해 날짜 형식을 문자로 바꾸려고 밖의 select문 사용
             cursor.execute(query, arg_1) #excute 문에 조회용 변수를 전달 할 때는 튜블 또는 리스트로 !!!!
             result = cursor.fetchall()

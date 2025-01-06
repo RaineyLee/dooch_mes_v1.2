@@ -28,11 +28,57 @@ class MainWindow(QWidget, emp_overtime_input_window) :
         self.setupUi(self)
         self.setWindowTitle("사원 잔업시간 입력")
         self.slots()
+
+        self.layout_setting()
         self.date.setDate(QDate.currentDate())
         # self.date = self.date_edit.date().toString("yyyyMMdd")
         self.time_start.setTime(QTime(18, 00)) 
         self.time_end.setTime(QTime(18, 00)) 
-        self.setFixedSize(QSize(1079,823))
+
+    def layout_setting(self):
+        # 레이아웃 설정
+        layout_main = QVBoxLayout()
+        layout_item_1 = QHBoxLayout()
+        layout_item_2 = QHBoxLayout()
+        layout_item_3 = QHBoxLayout()
+
+        # 레이아웃에 위젯 추가
+        layout_item_1.addWidget(self.lbl_select_file)
+        layout_item_1.addWidget(self.date)
+        layout_item_1.addWidget(self.lbl_select_file_2)   
+        layout_item_1.addWidget(self.txt_dept_id)
+        layout_item_1.addWidget(self.txt_dept_name)
+        layout_item_1.addWidget(self.btn_select_dept)
+        layout_item_1.addWidget(self.lbl_select_file_3)
+        layout_item_1.addWidget(self.txt_emp_id)
+        layout_item_1.addWidget(self.txt_emp_name)
+        layout_item_1.addWidget(self.btn_select_emp)
+
+        layout_item_2.addWidget(self.lbl_select_file_4)
+        layout_item_2.addWidget(self.time_start)
+        layout_item_2.addWidget(self.lbl_select_file_5)
+        layout_item_2.addWidget(self.time_end)
+        layout_item_2.addWidget(self.lbl_select_file_6)
+        layout_item_2.addWidget(self.txt_overtime)
+        layout_item_2.addWidget(self.lbl_select_file_8)
+        layout_item_2.addWidget(self.txt_detail)
+        layout_item_2.addWidget(self.lbl_select_file_9)
+        layout_item_2.addWidget(self.txt_note)
+        layout_item_2.addWidget(self.btn_input)
+
+        layout_item_3.addWidget(self.btn_delete)
+        layout_item_3.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        layout_item_3.addWidget(self.btn_save)        
+        layout_item_3.addWidget(self.btn_close)
+
+        # 레이아웃 추가
+        layout_main.addLayout(layout_item_1)
+        layout_main.addLayout(layout_item_2)
+        layout_main.addWidget(self.tbl_info)
+        layout_main.addLayout(layout_item_3)
+
+        # 레이아웃 적용
+        self.setLayout(layout_main)
 
     def slots(self):
         # self.btn_search.clicked.connect(self.make_data)
