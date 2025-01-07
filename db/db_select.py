@@ -762,7 +762,7 @@ class Select:
                         p_order_id AS "생산오더", 
                         item_id AS "품목코드", 
                         item_name AS "품목명", 
-                        item_qty AS "수량",
+                        LEFT(order_type, 2) AS "구분",
                         STATUS AS "상태"
                     FROM 
                         production_info
