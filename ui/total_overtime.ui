@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1221</width>
-    <height>707</height>
+    <width>1217</width>
+    <height>698</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,6 +63,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="calendarPopup">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QDateEdit" name="date_select_2">
    <property name="geometry">
@@ -86,6 +89,9 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="calendarPopup">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_dept">
@@ -143,6 +149,9 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_search_dept">
@@ -295,7 +304,7 @@
     <rect>
      <x>550</x>
      <y>10</y>
-     <width>113</width>
+     <width>100</width>
      <height>30</height>
     </rect>
    </property>
@@ -304,6 +313,25 @@
      <width>100</width>
      <height>30</height>
     </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

@@ -72,6 +72,10 @@ class WindowClass(QMainWindow, main_window) :
         overtime_emp_present.setStatusTip("사원별 잔업현황")
         overtime_emp_present.triggered.connect(self.overtime_emp_present)
 
+        overtime_daily_present = QAction('일자별 잔업현황', self)
+        overtime_daily_present.setStatusTip("일자별 잔업현황")
+        overtime_daily_present.triggered.connect(self.overtime_daily_present)
+
         overtime_input = QAction('잔업시간 입력', self)
         overtime_input.setStatusTip("잔업시간 입력")
         overtime_input.triggered.connect(self.overtime_input)
@@ -113,6 +117,7 @@ class WindowClass(QMainWindow, main_window) :
 
         overtime_menu.addAction(overtime_present)
         overtime_menu.addAction(overtime_emp_present)
+        overtime_menu.addAction(overtime_daily_present)
         overtime_menu.addSeparator()
         overtime_menu.addAction(overtime_input)
 
@@ -167,6 +172,13 @@ class WindowClass(QMainWindow, main_window) :
 
         self.main_overtime_window = emp_overtime_window.MainWindow()
         self.setCentralWidget(self.main_overtime_window)
+        self.show()
+
+    def overtime_daily_present(self):
+        import total_overtime as daily_overtime_window
+
+        self.daily_overtime_window = daily_overtime_window.MainWindow()
+        self.setCentralWidget(self.daily_overtime_window)
         self.show()
 
     def overtime_input(self):

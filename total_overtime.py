@@ -30,8 +30,8 @@ class MainWindow(QWidget, total_overtime) :
         self.setupUi(self)
         self.setWindowTitle("잔업시간 조회")
         self.slots()
-        # self.date_select_1.setDate(QDate.currentDate())
-        # self.date_select_2.setDate(QDate.currentDate())
+        self.date_select_1.setDate(QDate.currentDate())
+        self.date_select_2.setDate(QDate.currentDate())
         # # self.setFixedSize(QSize(1286,817))
 
         # self.txt_dept_id.setAlignment(Qt.AlignRight)
@@ -40,12 +40,12 @@ class MainWindow(QWidget, total_overtime) :
         self.layout_setting()
         
     def slots(self):
-        # self.btn_search.clicked.connect(self.make_data)
-        # self.btn_search_dept.clicked.connect(self.popup_dept_info)
-        # self.btn_clear.clicked.connect(self.clear)
-        # self.btn_close.clicked.connect(self.close)
-        # self.btn_download.clicked.connect(self.make_file)
-        pass
+        self.btn_search.clicked.connect(self.make_data)
+        self.btn_search_dept.clicked.connect(self.popup_dept_info)
+        self.btn_clear.clicked.connect(self.clear)
+        self.btn_close.clicked.connect(self.close)
+        self.btn_download.clicked.connect(self.make_file)
+        
 
     def layout_setting(self):
         # item layout
@@ -54,7 +54,8 @@ class MainWindow(QWidget, total_overtime) :
         item_layout.addWidget(self.date_select_1)
         item_layout.addWidget(self.date_select_2)
         item_layout.addWidget(self.lbl_dept)
-        item_layout.addWidget(self.txt_dept)
+        item_layout.addWidget(self.txt_dept_id)
+        item_layout.addWidget(self.txt_dept_name)
         item_layout.addWidget(self.btn_search_dept)
         item_layout.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
         item_layout.addWidget(self.btn_search)
@@ -86,14 +87,14 @@ class MainWindow(QWidget, total_overtime) :
         self.txt_dept_name.setText("")
 
     def make_data(self):
-        dept_id = self.txt_dept_id.toPlainText()
+        dept_id = self.txt_dept_id.text()
         date_1 = self.date_select_1.date().toString("yyyy-MM-dd")
         date_2 = self.date_select_2.date().toString("yyyy-MM-dd")
 
         if  dept_id:
             arr_1 = [dept_id, date_1, date_2]
            
-            from db.db_select import Select
+            from db.db_select_overtime import Select
             select = Select()
 
             result = select.all_overtime_1(arr_1)
@@ -105,7 +106,7 @@ class MainWindow(QWidget, total_overtime) :
         elif dept_id == "":
             arr_1 = [date_1, date_2]
            
-            from db.db_select import Select
+            from db.db_select_overtime import Select
             select = Select()
 
             result = select.all_overtime_2(arr_1)
