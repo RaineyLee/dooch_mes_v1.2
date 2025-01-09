@@ -30,19 +30,50 @@ class MainWindow(QWidget, total_overtime) :
         self.setupUi(self)
         self.setWindowTitle("잔업시간 조회")
         self.slots()
-        self.date_select_1.setDate(QDate.currentDate())
-        self.date_select_2.setDate(QDate.currentDate())
-        # self.setFixedSize(QSize(1286,817))
+        # self.date_select_1.setDate(QDate.currentDate())
+        # self.date_select_2.setDate(QDate.currentDate())
+        # # self.setFixedSize(QSize(1286,817))
 
-        self.txt_dept_id.setAlignment(Qt.AlignRight)
-        self.txt_dept_id.setAlignment(Qt.AlignCenter)
+        # self.txt_dept_id.setAlignment(Qt.AlignRight)
+        # self.txt_dept_id.setAlignment(Qt.AlignCenter)
+
+        self.layout_setting()
         
     def slots(self):
-        self.btn_search.clicked.connect(self.make_data)
-        self.btn_search_dept.clicked.connect(self.popup_dept_info)
-        self.btn_clear.clicked.connect(self.clear)
-        self.btn_close.clicked.connect(self.close)
-        self.btn_download.clicked.connect(self.make_file)
+        # self.btn_search.clicked.connect(self.make_data)
+        # self.btn_search_dept.clicked.connect(self.popup_dept_info)
+        # self.btn_clear.clicked.connect(self.clear)
+        # self.btn_close.clicked.connect(self.close)
+        # self.btn_download.clicked.connect(self.make_file)
+        pass
+
+    def layout_setting(self):
+        # item layout
+        item_layout = QHBoxLayout()
+        item_layout.addWidget(self.lbl_date)
+        item_layout.addWidget(self.date_select_1)
+        item_layout.addWidget(self.date_select_2)
+        item_layout.addWidget(self.lbl_dept)
+        item_layout.addWidget(self.txt_dept)
+        item_layout.addWidget(self.btn_search_dept)
+        item_layout.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        item_layout.addWidget(self.btn_search)
+
+        # execute layout
+        exec_layout = QHBoxLayout()
+        exec_layout.addWidget(self.btn_download)
+        exec_layout.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        exec_layout.addWidget(self.btn_clear)
+        exec_layout.addWidget(self.btn_close)
+
+        # main layout
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(item_layout)
+        main_layout.addWidget(self.tbl_info)
+        main_layout.addLayout(exec_layout)
+
+        self.setLayout(main_layout)
+
 
     def set_date(self):
         date = self.date_select.date()
