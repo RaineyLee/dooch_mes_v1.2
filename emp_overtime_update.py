@@ -328,7 +328,7 @@ class MainWindow(QWidget, emp_overtime_update_window) :
                 return
             elif option == QtWidgets.QMessageBox.Yes: 
 
-                from db.db_delete import Delete
+                from db.db_delete_overtime import Delete
                 delete = Delete()
                 delete.delete_emp_overtime(id)
                 self.tbl_info.setRowCount(0)               

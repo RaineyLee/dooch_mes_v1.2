@@ -155,6 +155,27 @@ class MainWindow(QWidget, emp_overtime_input_window) :
             self.tbl_info.setItem(row_count, i, QTableWidgetItem(str(list[i])))
             self.tbl_info.item(row_count, i).setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
+                # 컨텐츠의 길이에 맞추어 컬럼의 길이를 자동으로 조절
+        ################################################################
+        table = self.tbl_info
+        header = table.horizontalHeader()
+
+        # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
+        table.setStyleSheet("""
+            QHeaderView::section {
+                background-color: lightgray;
+                color: black;
+                border: 1px solid #d6d6d6;
+            }
+        """)
+
+        for i in range(col_count):
+            header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        ################################################################
+
+        # 테이블의 길이에 맞추어 컬럼 길이를 균등하게 확장
+        self.tbl_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
             # self.txt_dept_id.setText("")
             # self.txt_dept_name.setText("")
             # self.txt_emp_id.setText("")

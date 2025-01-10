@@ -80,6 +80,10 @@ class WindowClass(QMainWindow, main_window) :
         overtime_input.setStatusTip("잔업시간 입력")
         overtime_input.triggered.connect(self.overtime_input)
 
+        overtime_update = QAction('잔업시간 수정/삭제', self)
+        overtime_update.setStatusTip("잔업시간 수정/삭제")
+        overtime_update.triggered.connect(self.overtime_update)
+
         # select_dept = QAction('부서별 조회', self)
         # select_dept.setStatusTip("부서별 조회")
         # select_dept.triggered.connect(self.select_dept)
@@ -120,6 +124,7 @@ class WindowClass(QMainWindow, main_window) :
         overtime_menu.addAction(overtime_daily_present)
         overtime_menu.addSeparator()
         overtime_menu.addAction(overtime_input)
+        overtime_menu.addAction(overtime_update)
 
 
         status_bar = self.statusBar()
@@ -185,7 +190,15 @@ class WindowClass(QMainWindow, main_window) :
         import emp_overtime_input as emp_overtime_input_window
 
         self.emp_overtime_input_window = emp_overtime_input_window.MainWindow()
-        self.emp_overtime_input_window.show()
+        self.setCentralWidget(self.emp_overtime_input_window)
+        self.show()
+
+    def overtime_update(self):
+        import emp_overtime_update as emp_overtime_update_window
+
+        self.emp_overtime_update_window = emp_overtime_update_window.MainWindow()
+        self.setCentralWidget(self.emp_overtime_update_window)
+        self.show()
 
     def select_dept(self):
         import dept_overtime as select_dept_window
@@ -211,11 +224,12 @@ class WindowClass(QMainWindow, main_window) :
         self.emp_update_window = update_emp_window.MainWindow()
         self.emp_update_window.show() 
 
-    def input_emp(self):
-        import emp_overtime_input as input_emp_window
+    # def input_emp(self):
+    #     import emp_overtime_input as input_emp_window
 
-        self.emp_input_window = input_emp_window.MainWindow()
-        self.emp_input_window.show() 
+    #     self.input_emp_window = input_emp_window.MainWindow()
+    #     self.setCentralWidget(self.input_emp_window)
+    #     self.show()
 
     def upload_overtime(self):
         import upload as upload_window
