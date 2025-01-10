@@ -29,6 +29,9 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         self.setupUi(self)
         self.setWindowTitle("사원 잔업시간 수정")
         self.slots()
+        self.setting_layout()
+
+        # setting date, time
         self.date_from.setDate(QDate.currentDate())
         self.date_to.setDate(QDate.currentDate())
 
@@ -36,7 +39,49 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         self.time_end.setTime(QtCore.QTime(18, 00)) 
 
         # self.date = self.date_edit.date().toString("yyyyMMdd")
-        self.setFixedSize(QSize(1079,823))
+
+    def setting_layout(self):
+        # setting item_1 layout
+        layout_item_1 = QHBoxLayout()
+        layout_item_1.addWidget(self.lbl_select_file)
+        layout_item_1.addWidget(self.date_from)
+        layout_item_1.addWidget(self.date_to)
+        layout_item_1.addWidget(self.lbl_select_file_7)
+        layout_item_1.addWidget(self.txt_dept_id)
+        layout_item_1.addWidget(self.txt_dept_name)
+        layout_item_1.addWidget(self.btn_select_dept)
+        layout_item_1.addWidget(self.lbl_select_file_3)
+        layout_item_1.addWidget(self.txt_emp_id)
+        layout_item_1.addWidget(self.txt_emp_name)
+        layout_item_1.addWidget(self.btn_select_emp)
+        layout_item_1.addWidget(self.btn_select)
+
+        # setting item_2 layout
+        layout_item_2 = QHBoxLayout()
+        layout_item_2.addWidget(self.lbl_select_file_6)
+        layout_item_2.addWidget(self.time_start)
+        layout_item_2.addWidget(self.time_end)
+        layout_item_2.addWidget(self.lbl_select_file_10)
+        layout_item_2.addWidget(self.txt_overtime)
+        layout_item_2.addWidget(self.lbl_select_file_8)
+        layout_item_2.addWidget(self.txt_detail)
+        layout_item_2.addWidget(self.lbl_select_file_9)
+        layout_item_2.addWidget(self.txt_note)
+        layout_item_2.addWidget(self.btn_update)
+        layout_item_2.addWidget(self.btn_delete)
+
+        # execute layout
+        layout_exec = QHBoxLayout()
+        layout_exec.addStretch()
+        layout_exec.addWidget(self.btn_close)
+                
+        layout_main = QVBoxLayout()
+        layout_main.addLayout(layout_item_1)
+        layout_main.addLayout(layout_item_2)
+        layout_main.addWidget(self.tbl_info)
+        layout_main.addLayout(layout_exec)
+
+        self.setLayout(layout_main)
 
     def slots(self):
         # self.btn_search.clicked.connect(self.make_data)
@@ -92,13 +137,13 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         date_from = self.date_from.date().toString("yyyy-MM-dd")
         date_to = self.date_to.date().toString("yyyy-MM-dd")
 
-        dept_id = self.txt_dept_id.toPlainText()
+        dept_id = self.txt_dept_id.text()
         if dept_id == "":
             dept_id = '%%'
         else:
             dept_id
 
-        emp_id = self.txt_emp_id.toPlainText()
+        emp_id = self.txt_emp_id.text()
         if emp_id == "":
             emp_id = '%%'
         else:
@@ -106,7 +151,7 @@ class MainWindow(QWidget, emp_overtime_update_window) :
 
         arr = [date_from, date_to, dept_id, emp_id]
 
-        from db.db_select import Select
+        from db.db_select_overtime import Select
         select = Select()
         result = select.update_overtime(arr)
 
@@ -143,7 +188,7 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         self.tbl_info.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def select_info(self):
-        x = self.tbl_info.selectedIndexes() # 리스트로 선택된 행번호와 열번호가 x에 입력된다.
+        x = self.tbl_info.selectedIndexes() # QModelIndex object 로 선택 라인의 정보가 전달 된다.
         row = x[0].row() #첫번째 선택된 행번호를 부르는 방법
         num_col = self.tbl_info.columnCount()
 
@@ -184,9 +229,9 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         self.txt_note.setText(list[10])
 
     # def delete_overtime_info(self):
-    #     id = self.txt_id.toPlainText()
-    #     dept_name = self.txt_dept_name.toPlainText()
-    #     emp_name = self.txt_emp_name.toPlainText()
+    #     id = self.txt_id.text()
+    #     dept_name = self.txt_dept_name.text()
+    #     emp_name = self.txt_emp_name.text()
 
     #     option = QtWidgets.QMessageBox.question(self, "QMessageBox", f"{dept_name} {emp_name} 사원의 잔업정보를 삭제 하시겠습니까?", 
     #                                    QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel, QtWidgets.QMessageBox.Yes)
@@ -212,15 +257,15 @@ class MainWindow(QWidget, emp_overtime_update_window) :
             self.msg_box("수정오류", "수정 가능 기간이 지났습니다.")
             return
         else:
-            id = self.txt_id.toPlainText()
-            dept_name = self.txt_dept_name.toPlainText()
-            emp_name = self.txt_emp_name.toPlainText()
+            id = self.txt_id.text()
+            dept_name = self.txt_dept_name.text()
+            emp_name = self.txt_emp_name.text()
 
-            overtime = self.txt_overtime.toPlainText()
+            overtime = self.txt_overtime.text()
             from_time = self.time_start.time().toString("hh:mm")
             to_time = self.time_end.time().toString("hh:mm")
-            detail = self.txt_detail.toPlainText()
-            note = self.txt_note.toPlainText()
+            detail = self.txt_detail.text()
+            note = self.txt_note.text()
 
             update_list = [overtime, from_time, to_time, detail, note, id]
 
@@ -233,7 +278,7 @@ class MainWindow(QWidget, emp_overtime_update_window) :
                 return
             elif option == QtWidgets.QMessageBox.Yes: 
 
-                from db.db_update import Update
+                from db.db_update_overtime import Update
                 update = Update()
                 update.update_emp_overtime(update_list)
                 self.tbl_info.setRowCount(0)
@@ -251,9 +296,12 @@ class MainWindow(QWidget, emp_overtime_update_window) :
                 self.txt_detail.setText("")
                 self.txt_note.setText("")
 
-                from db.db_select import Select
+                from db.db_select_overtime import Select
                 select = Select()
                 result = select.update_overtime_id(id)
+
+                if result is None:
+                    return
 
                 title = ["ID", "부서아이디", "부서명", "사번", "이름", "날짜", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
                 self.make_table(len(result), result, title)
@@ -267,9 +315,9 @@ class MainWindow(QWidget, emp_overtime_update_window) :
             self.msg_box("삭제오류", "삭제 가능 기간이 지났습니다.")
             return
         else:
-            id = self.txt_id.toPlainText()
-            dept_name = self.txt_dept_name.toPlainText()
-            emp_name = self.txt_emp_name.toPlainText()
+            id = self.txt_id.text()
+            dept_name = self.txt_dept_name.text()
+            emp_name = self.txt_emp_name.text()
 
             option = QtWidgets.QMessageBox.question(self, "QMessageBox", f"{dept_name} {emp_name} 사원의 잔업정보를 삭제 하시겠습니까?", 
                                         QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel, QtWidgets.QMessageBox.Yes)
@@ -306,15 +354,15 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         overtime_date = self.date.date()
         overtime_date = overtime_date.toString("yyyy-MM-dd")
 
-        dept_id = self.txt_dept_id.toPlainText()
-        dept_name = self.txt_dept_name.toPlainText()
-        emp_id = self.txt_emp_id.toPlainText()
-        emp_name = self.txt_emp_name.toPlainText()
-        overtime = self.txt_overtime.toPlainText()
-        from_time = self.txt_from_time.toPlainText()
-        to_time = self.txt_to_time.toPlainText()
-        detail = self.txt_detail.toPlainText()
-        note = self.txt_note.toPlainText()
+        dept_id = self.txt_dept_id.text()
+        dept_name = self.txt_dept_name.text()
+        emp_id = self.txt_emp_id.text()
+        emp_name = self.txt_emp_name.text()
+        overtime = self.txt_overtime.text()
+        from_time = self.txt_from_time.text()
+        to_time = self.txt_to_time.text()
+        detail = self.txt_detail.text()
+        note = self.txt_note.text()
 
         list = [dept_id, dept_name, emp_id, emp_name, overtime_date, str(overtime), from_time, to_time, detail, note]
         title = ["부서ID", "부서명", "사번", "사원명", "잔업일자", "잔업시간", "시작시간", "종료시간", "작업내용", "비고"]
@@ -405,7 +453,7 @@ class MainWindow(QWidget, emp_overtime_update_window) :
         
     ### 다이알로그 창으로 값을 전달 할 때는 아규먼트를 보내 주는 방식으로 !!!!
     def popup_emp_info(self):
-        arg_1 = self.txt_dept_id.toPlainText()
+        arg_1 = self.txt_dept_id.text()
         
         from popup.emp_popup import EmpWindow
         input_dialog = EmpWindow(arg_1) ##   <-----중요 포인트
