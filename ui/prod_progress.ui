@@ -129,6 +129,7 @@
       </property>
       <property name="font">
        <font>
+        <family>Arial</family>
         <pointsize>48</pointsize>
        </font>
       </property>

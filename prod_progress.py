@@ -104,6 +104,14 @@ class MainWindow(QWidget, main_window) :
         self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
 
         col = len(column_names)
+        
+        table = self.tbl_info
+        header = table.horizontalHeader()
+
+        # 헤더 글자크기 변경
+        header_font = QFont()
+        header_font.setPointSize(48)
+        self.tbl_info.horizontalHeader().setFont(header_font)
 
         self.tbl_info.setRowCount(num)
         self.tbl_info.setColumnCount(col)
@@ -128,9 +136,9 @@ class MainWindow(QWidget, main_window) :
 
                 self.tbl_info.setItem(i, j, item)
 
-                # 7번째 컬럼(인덱스 6)의 숫자를 시간 형식으로 변환
-                if j in [7,8] and cell_value != "":  # 8번째 컬럼
-                    cell_value = self.format_seconds_to_time(cell_value)
+                # # 7번째 컬럼(인덱스 6)의 숫자를 시간 형식으로 변환
+                # if j in [7,8] and cell_value != "":  # 8번째 컬럼
+                #     cell_value = self.format_seconds_to_time(cell_value)
 
                 # 3번째 컬럼만 왼쪽 정렬
                 if j == 2:  # 컬럼 인덱스 2 (3번째 컬럼)
@@ -143,13 +151,6 @@ class MainWindow(QWidget, main_window) :
                 # 전체 중앙 정렬
                 #self.tbl_info.item(i, j).setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)     
 
-        table = self.tbl_info
-        header = table.horizontalHeader()
-
-        # 헤더 글자크기 변경
-        header_font = QFont()
-        header_font.setPointSize(48)
-        self.tbl_info.horizontalHeader().setFont(header_font)
 
         # QSS 스타일 적용 (헤더 배경 색을 연한 회색으로 변경)
         table.setStyleSheet("""
@@ -163,10 +164,11 @@ class MainWindow(QWidget, main_window) :
         # # 컬럼별 설정: 일부는 Interactive, 일부는 ResizeToContents
         # for i in range(table.columnCount()):
         #     if i in [2, 4, 8, 9]:  # 특정 컬럼은 길이에 맞추어 조정
-        #         header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        #         header.setSectionResizeMode(i, QHeaderView.ResizeToContents)s
                 
         #     else:  # 나머지 컬럼은 Interactive
         #         header.setSectionResizeMode(i, QHeaderView.Interactive)
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
 
         # 행 높이를 텍스트에 맞게 자동 조정
         self.tbl_info.resizeRowsToContents()
