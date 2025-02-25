@@ -93,15 +93,15 @@ class MainWindow(QWidget, main_window) :
         select = Select()
 
         try:
+            self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
             result, column_names = select.select_prod_info_display(arr_1)
             self.make_table(len(result), result, column_names)
         except Exception as e:
-                self.msg_box("Program Error", str(e))
+                # self.msg_box("Program Error", str(e))
                 return
 
     def make_table(self, num, arr_1, column_names):   
-        self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화
-        self.tbl_info.setRowCount(0) # clear()는 행은 그대로 내용만 삭제, 행을 "0" 호출 한다.
+        self.tbl_info.setSortingEnabled(False)  # 정렬 비활성화        
 
         col = len(column_names)
         

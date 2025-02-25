@@ -783,7 +783,7 @@ class Select:
                 return result, column_names
             else:
                 self.conn.close()
-                self.msg_box("조회결과", "조회결과가 없습니다.")
+                # self.msg_box("조회결과", "조회결과가 없습니다.")
                 return            
 
         except Exception as e:
