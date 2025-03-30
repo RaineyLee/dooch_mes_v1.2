@@ -4,7 +4,7 @@ import sys
 # import time
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate, QSize
+from PyQt5.QtCore import Qt, QDate
 from PyQt5 import uic
 import openpyxl
 from openpyxl.styles import Alignment

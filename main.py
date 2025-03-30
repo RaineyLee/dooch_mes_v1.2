@@ -163,7 +163,7 @@ class WindowClass(QMainWindow, main_window) :
 
         self.upload_prod_window = upload_prod_window.MainWindow()
         self.setCentralWidget(self.upload_prod_window)
-        self.setCentralWidget(self.upload_prod_window)
+        self.show()
 
     def overtime_present(self):
         import main_overtime as main_overtime_window

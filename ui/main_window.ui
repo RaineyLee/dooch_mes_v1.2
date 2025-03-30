@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1168</width>
+    <width>1128</width>
     <height>731</height>
    </rect>
   </property>
@@ -18,25 +18,13 @@
   <property name="windowTitle">
    <string>Doochpump MES</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="grid_widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>1101</width>
-      <height>711</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2"/>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1168</width>
+     <width>1128</width>
      <height>22</height>
     </rect>
    </property>
