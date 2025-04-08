@@ -28,9 +28,8 @@ class WindowClass(QMainWindow, main_window) :
     def slots(self):
         pass
 
-    def mainwindow(self):
-       
-        self.setupUi(self)
+    def mainwindow(self):       
+        self.setupUi(self) # 디자이너를 통해 만든 uic --> main_window 클래스의 매서드(setupUi)로 디자이너로 만든 레이아웃, 버튼... 등을 화면에 구현
         self.setWindowTitle(f"DOOCHPUMP MES_v{self.version}")
 
         menu_bar = self.menuBar()
@@ -127,7 +126,7 @@ class WindowClass(QMainWindow, main_window) :
         overtime_menu.addAction(overtime_update)
 
 
-        status_bar = self.statusBar()
+        status_bar = self.statusBar() # 하단 상태 표시줄 QMainWindow의 내장 메서드
         self.setStatusBar(status_bar)
 
     def prod_present(self):
